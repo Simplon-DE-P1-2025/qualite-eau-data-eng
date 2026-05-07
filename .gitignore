@@ -1,0 +1,48 @@
+# Spark / Derby runtime artifacts
+derby.log
+metastore_db/
+spark-warehouse/
+
+# Temporary local output folders created during Windows fallback tests
+silver_spark_*/
+silver_probe/
+test_write_probe/
+logs/orchestration/
+logs/silver_runs/
+logs/silver_local_latest.json
+
+# VS Code generated cache
+.vscode/PythonImportHelper-v2-Completion.json
+.vscode/*
+
+# Python cache
+__pycache__/
+*.pyc
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+.coverage.*
+coverage.xml
+htmlcov/
+
+# Virtual environments / local Python config
+.venv/
+venv/
+env/
+.env
+.env.*
+.python-version
+
+# Node / release tooling
+node_modules/
+
+# Local data outputs
+data/
+
+# Local orchestration logs
+logs/
+*.log
+
+# Great Expectations runtime metadata recreated at each validation run
+notebooks/quality/.gx_runtime/

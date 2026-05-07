@@ -1,0 +1,29 @@
+{
+  "name": "qualite-eau-data-eng",
+  "version": "1.0.0",
+  "description": "Projet d’ingénierie des données pour l’analyse de la qualité de l’eau en France utilisant Azure, Databricks et Delta Lake",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Simplon-DE-P1-2025/qualite-eau-data-eng.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Simplon-DE-P1-2025/qualite-eau-data-eng/issues"
+  },
+  "homepage": "https://github.com/Simplon-DE-P1-2025/qualite-eau-data-eng#readme",
+  "devDependencies": {
+    "@semantic-release/changelog": "^6.0.3",
+    "@semantic-release/commit-analyzer": "^13.0.1",
+    "@semantic-release/git": "^10.0.1",
+    "@semantic-release/github": "^12.0.6",
+    "@semantic-release/release-notes-generator": "^14.1.0",
+    "semantic-release": "^25.0.3"
+  }
+}

@@ -1,0 +1,4888 @@
+{
+  "generated_at_utc": "2026-05-05 20:13:18",
+  "environment": "local",
+  "silver_path": "C:/Users/DELL/Documents/vscode_simplon/brief_qualite_eau_local/data/silver/",
+  "storage_format": "parquet",
+  "quality_non_null_min_pct": 0.95,
+  "validations": [
+    {
+      "validation_name": "silver_stations_schema_suite",
+      "success": true,
+      "checkpoint_result": {
+        "run_id": {
+          "run_name": "20260505_201227-silver_stations_checkpoint",
+          "run_time": "2026-05-05T22:12:52.678403+02:00"
+        },
+        "run_results": {
+          "ValidationResultIdentifier::silver_stations_schema_suite/20260505_201227-silver_stations_checkpoint/20260505T201252.678403Z/silver_stations_asset_datasource-silver_stations_asset": {
+            "validation_result": {
+              "success": true,
+              "results": [
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_table_columns_to_match_ordered_list",
+                    "kwargs": {
+                      "column_list": [
+                        "code_commune",
+                        "nom_commune",
+                        "nom_quartier",
+                        "code_reseau",
+                        "nom_reseau",
+                        "debut_alim",
+                        "annee",
+                        "nom_commune_norm",
+                        "code_departement_geo",
+                        "code_region_geo",
+                        "population",
+                        "longitude",
+                        "latitude",
+                        "_coords_valides",
+                        "_silver_timestamp"
+                      ],
+                      "batch_id": "silver_stations_asset_datasource-silver_stations_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {
+                    "observed_value": [
+                      "code_commune",
+                      "nom_commune",
+                      "nom_quartier",
+                      "code_reseau",
+                      "nom_reseau",
+                      "debut_alim",
+                      "annee",
+                      "nom_commune_norm",
+                      "code_departement_geo",
+                      "code_region_geo",
+                      "population",
+                      "longitude",
+                      "latitude",
+                      "_coords_valides",
+                      "_silver_timestamp"
+                    ]
+                  },
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_table_column_count_to_equal",
+                    "kwargs": {
+                      "value": 15,
+                      "batch_id": "silver_stations_asset_datasource-silver_stations_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {
+                    "observed_value": 15
+                  },
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_table_row_count_to_be_between",
+                    "kwargs": {
+                      "min_value": 1,
+                      "batch_id": "silver_stations_asset_datasource-silver_stations_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {
+                    "observed_value": 2
+                  },
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_to_exist",
+                    "kwargs": {
+                      "column": "code_commune",
+                      "batch_id": "silver_stations_asset_datasource-silver_stations_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {},
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_values_to_be_in_type_list",
+                    "kwargs": {
+                      "column": "code_commune",
+                      "type_list": [
+                        "StringType"
+                      ],
+                      "batch_id": "silver_stations_asset_datasource-silver_stations_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {
+                    "observed_value": "StringType"
+                  },
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_values_to_not_be_null",
+                    "kwargs": {
+                      "column": "code_commune",
+                      "mostly": 0.95,
+                      "batch_id": "silver_stations_asset_datasource-silver_stations_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {
+                    "element_count": 2,
+                    "unexpected_count": 0,
+                    "unexpected_percent": 0.0,
+                    "partial_unexpected_list": [],
+                    "partial_unexpected_counts": []
+                  },
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_to_exist",
+                    "kwargs": {
+                      "column": "nom_commune",
+                      "batch_id": "silver_stations_asset_datasource-silver_stations_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {},
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_values_to_be_in_type_list",
+                    "kwargs": {
+                      "column": "nom_commune",
+                      "type_list": [
+                        "StringType"
+                      ],
+                      "batch_id": "silver_stations_asset_datasource-silver_stations_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {
+                    "observed_value": "StringType"
+                  },
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_to_exist",
+                    "kwargs": {
+                      "column": "nom_quartier",
+                      "batch_id": "silver_stations_asset_datasource-silver_stations_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {},
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_values_to_be_in_type_list",
+                    "kwargs": {
+                      "column": "nom_quartier",
+                      "type_list": [
+                        "StringType"
+                      ],
+                      "batch_id": "silver_stations_asset_datasource-silver_stations_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {
+                    "observed_value": "StringType"
+                  },
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_to_exist",
+                    "kwargs": {
+                      "column": "code_reseau",
+                      "batch_id": "silver_stations_asset_datasource-silver_stations_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {},
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_values_to_be_in_type_list",
+                    "kwargs": {
+                      "column": "code_reseau",
+                      "type_list": [
+                        "StringType"
+                      ],
+                      "batch_id": "silver_stations_asset_datasource-silver_stations_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {
+                    "observed_value": "StringType"
+                  },
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_values_to_not_be_null",
+                    "kwargs": {
+                      "column": "code_reseau",
+                      "batch_id": "silver_stations_asset_datasource-silver_stations_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {
+                    "element_count": 2,
+                    "unexpected_count": 0,
+                    "unexpected_percent": 0.0,
+                    "partial_unexpected_list": [],
+                    "partial_unexpected_counts": []
+                  },
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_to_exist",
+                    "kwargs": {
+                      "column": "nom_reseau",
+                      "batch_id": "silver_stations_asset_datasource-silver_stations_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {},
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_values_to_be_in_type_list",
+                    "kwargs": {
+                      "column": "nom_reseau",
+                      "type_list": [
+                        "StringType"
+                      ],
+                      "batch_id": "silver_stations_asset_datasource-silver_stations_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {
+                    "observed_value": "StringType"
+                  },
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_to_exist",
+                    "kwargs": {
+                      "column": "debut_alim",
+                      "batch_id": "silver_stations_asset_datasource-silver_stations_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {},
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_values_to_be_in_type_list",
+                    "kwargs": {
+                      "column": "debut_alim",
+                      "type_list": [
+                        "DateType"
+                      ],
+                      "batch_id": "silver_stations_asset_datasource-silver_stations_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {
+                    "observed_value": "DateType"
+                  },
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_to_exist",
+                    "kwargs": {
+                      "column": "annee",
+                      "batch_id": "silver_stations_asset_datasource-silver_stations_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {},
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_values_to_be_in_type_list",
+                    "kwargs": {
+                      "column": "annee",
+                      "type_list": [
+                        "IntegerType"
+                      ],
+                      "batch_id": "silver_stations_asset_datasource-silver_stations_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {
+                    "observed_value": "IntegerType"
+                  },
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_values_to_not_be_null",
+                    "kwargs": {
+                      "column": "annee",
+                      "mostly": 0.95,
+                      "batch_id": "silver_stations_asset_datasource-silver_stations_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {
+                    "element_count": 2,
+                    "unexpected_count": 0,
+                    "unexpected_percent": 0.0,
+                    "partial_unexpected_list": [],
+                    "partial_unexpected_counts": []
+                  },
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_to_exist",
+                    "kwargs": {
+                      "column": "nom_commune_norm",
+                      "batch_id": "silver_stations_asset_datasource-silver_stations_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {},
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_values_to_be_in_type_list",
+                    "kwargs": {
+                      "column": "nom_commune_norm",
+                      "type_list": [
+                        "StringType"
+                      ],
+                      "batch_id": "silver_stations_asset_datasource-silver_stations_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {
+                    "observed_value": "StringType"
+                  },
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_values_to_not_be_null",
+                    "kwargs": {
+                      "column": "nom_commune_norm",
+                      "mostly": 0.95,
+                      "batch_id": "silver_stations_asset_datasource-silver_stations_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {
+                    "element_count": 2,
+                    "unexpected_count": 0,
+                    "unexpected_percent": 0.0,
+                    "partial_unexpected_list": [],
+                    "partial_unexpected_counts": []
+                  },
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_to_exist",
+                    "kwargs": {
+                      "column": "code_departement_geo",
+                      "batch_id": "silver_stations_asset_datasource-silver_stations_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {},
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_values_to_be_in_type_list",
+                    "kwargs": {
+                      "column": "code_departement_geo",
+                      "type_list": [
+                        "StringType"
+                      ],
+                      "batch_id": "silver_stations_asset_datasource-silver_stations_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {
+                    "observed_value": "StringType"
+                  },
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_values_to_not_be_null",
+                    "kwargs": {
+                      "column": "code_departement_geo",
+                      "mostly": 0.95,
+                      "batch_id": "silver_stations_asset_datasource-silver_stations_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {
+                    "element_count": 2,
+                    "unexpected_count": 0,
+                    "unexpected_percent": 0.0,
+                    "partial_unexpected_list": [],
+                    "partial_unexpected_counts": []
+                  },
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_to_exist",
+                    "kwargs": {
+                      "column": "code_region_geo",
+                      "batch_id": "silver_stations_asset_datasource-silver_stations_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {},
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_values_to_be_in_type_list",
+                    "kwargs": {
+                      "column": "code_region_geo",
+                      "type_list": [
+                        "StringType"
+                      ],
+                      "batch_id": "silver_stations_asset_datasource-silver_stations_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {
+                    "observed_value": "StringType"
+                  },
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_values_to_not_be_null",
+                    "kwargs": {
+                      "column": "code_region_geo",
+                      "mostly": 0.95,
+                      "batch_id": "silver_stations_asset_datasource-silver_stations_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {
+                    "element_count": 2,
+                    "unexpected_count": 0,
+                    "unexpected_percent": 0.0,
+                    "partial_unexpected_list": [],
+                    "partial_unexpected_counts": []
+                  },
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_to_exist",
+                    "kwargs": {
+                      "column": "population",
+                      "batch_id": "silver_stations_asset_datasource-silver_stations_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {},
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_values_to_be_in_type_list",
+                    "kwargs": {
+                      "column": "population",
+                      "type_list": [
+                        "LongType",
+                        "IntegerType"
+                      ],
+                      "batch_id": "silver_stations_asset_datasource-silver_stations_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {
+                    "observed_value": "LongType"
+                  },
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_to_exist",
+                    "kwargs": {
+                      "column": "longitude",
+                      "batch_id": "silver_stations_asset_datasource-silver_stations_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {},
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_values_to_be_in_type_list",
+                    "kwargs": {
+                      "column": "longitude",
+                      "type_list": [
+                        "DoubleType",
+                        "FloatType"
+                      ],
+                      "batch_id": "silver_stations_asset_datasource-silver_stations_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {
+                    "observed_value": "DoubleType"
+                  },
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_values_to_be_between",
+                    "kwargs": {
+                      "column": "longitude",
+                      "max_value": 180.0,
+                      "min_value": -180.0,
+                      "mostly": 1.0,
+                      "batch_id": "silver_stations_asset_datasource-silver_stations_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {
+                    "element_count": 2,
+                    "unexpected_count": 0,
+                    "unexpected_percent": 0.0,
+                    "partial_unexpected_list": [],
+                    "missing_count": 0,
+                    "missing_percent": 0.0,
+                    "unexpected_percent_total": 0.0,
+                    "unexpected_percent_nonmissing": 0.0,
+                    "partial_unexpected_counts": []
+                  },
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_to_exist",
+                    "kwargs": {
+                      "column": "latitude",
+                      "batch_id": "silver_stations_asset_datasource-silver_stations_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {},
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_values_to_be_in_type_list",
+                    "kwargs": {
+                      "column": "latitude",
+                      "type_list": [
+                        "DoubleType",
+                        "FloatType"
+                      ],
+                      "batch_id": "silver_stations_asset_datasource-silver_stations_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {
+                    "observed_value": "DoubleType"
+                  },
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_values_to_be_between",
+                    "kwargs": {
+                      "column": "latitude",
+                      "max_value": 90.0,
+                      "min_value": -90.0,
+                      "mostly": 1.0,
+                      "batch_id": "silver_stations_asset_datasource-silver_stations_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {
+                    "element_count": 2,
+                    "unexpected_count": 0,
+                    "unexpected_percent": 0.0,
+                    "partial_unexpected_list": [],
+                    "missing_count": 0,
+                    "missing_percent": 0.0,
+                    "unexpected_percent_total": 0.0,
+                    "unexpected_percent_nonmissing": 0.0,
+                    "partial_unexpected_counts": []
+                  },
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_to_exist",
+                    "kwargs": {
+                      "column": "_coords_valides",
+                      "batch_id": "silver_stations_asset_datasource-silver_stations_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {},
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_values_to_be_in_type_list",
+                    "kwargs": {
+                      "column": "_coords_valides",
+                      "type_list": [
+                        "BooleanType"
+                      ],
+                      "batch_id": "silver_stations_asset_datasource-silver_stations_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {
+                    "observed_value": "BooleanType"
+                  },
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_to_exist",
+                    "kwargs": {
+                      "column": "_silver_timestamp",
+                      "batch_id": "silver_stations_asset_datasource-silver_stations_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {},
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_values_to_be_in_type_list",
+                    "kwargs": {
+                      "column": "_silver_timestamp",
+                      "type_list": [
+                        "TimestampType"
+                      ],
+                      "batch_id": "silver_stations_asset_datasource-silver_stations_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {
+                    "observed_value": "TimestampType"
+                  },
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                }
+              ],
+              "evaluation_parameters": {},
+              "statistics": {
+                "evaluated_expectations": 41,
+                "successful_expectations": 41,
+                "unsuccessful_expectations": 0,
+                "success_percent": 100.0
+              },
+              "meta": {
+                "great_expectations_version": "0.18.21",
+                "expectation_suite_name": "silver_stations_schema_suite",
+                "run_id": {
+                  "run_name": "20260505_201227-silver_stations_checkpoint",
+                  "run_time": "2026-05-05T22:12:52.678403+02:00"
+                },
+                "batch_spec": {
+                  "batch_data": "SparkDataFrame"
+                },
+                "batch_markers": {
+                  "ge_load_time": "20260505T201252.828169Z"
+                },
+                "active_batch_definition": {
+                  "datasource_name": "silver_stations_asset_datasource",
+                  "data_connector_name": "fluent",
+                  "data_asset_name": "silver_stations_asset",
+                  "batch_identifiers": {}
+                },
+                "validation_time": "20260505T201252.835086Z",
+                "checkpoint_name": "silver_stations_checkpoint",
+                "validation_id": null,
+                "checkpoint_id": null
+              }
+            },
+            "actions_results": {
+              "store_validation_result": {
+                "class": "StoreValidationResultAction"
+              },
+              "update_data_docs": {
+                "local_site": "file://C:\\Users\\DELL\\Documents\\vscode_simplon\\brief_qualite_eau_local\\quality\\.gx_runtime\\gx\\uncommitted/data_docs/local_site/validations%5Csilver_stations_schema_suite%5C20260505_201227-silver_stations_checkpoint%5C20260505T201252.678403Z%5Csilver_stations_asset_datasource-silver_stations_asset.html",
+                "class": "UpdateDataDocsAction"
+              }
+            }
+          }
+        },
+        "checkpoint_config": {
+          "template_name": null,
+          "run_name_template": "20260505_201227-silver_stations_checkpoint",
+          "notify_on": null,
+          "module_name": "great_expectations.checkpoint",
+          "name": "silver_stations_checkpoint",
+          "config_version": 1.0,
+          "evaluation_parameters": {},
+          "notify_with": null,
+          "expectation_suite_name": "silver_stations_schema_suite",
+          "action_list": [
+            {
+              "name": "store_validation_result",
+              "action": {
+                "class_name": "StoreValidationResultAction"
+              }
+            },
+            {
+              "name": "update_data_docs",
+              "action": {
+                "class_name": "UpdateDataDocsAction"
+              }
+            }
+          ],
+          "runtime_configuration": {},
+          "class_name": "Checkpoint",
+          "site_names": null,
+          "profilers": [],
+          "default_validation_id": null,
+          "batch_request": {
+            "datasource_name": "silver_stations_asset_datasource",
+            "data_asset_name": "silver_stations_asset",
+            "options": {},
+            "batch_slice": null
+          },
+          "validations": [],
+          "ge_cloud_id": null,
+          "slack_webhook": null,
+          "expectation_suite_ge_cloud_id": null
+        },
+        "success": true
+      }
+    },
+    {
+      "validation_name": "silver_stations_uniqueness_suite",
+      "success": true,
+      "checkpoint_result": {
+        "run_id": {
+          "run_name": "20260505_201227-silver_stations_uniqueness_checkpoint",
+          "run_time": "2026-05-05T22:12:56.350689+02:00"
+        },
+        "run_results": {
+          "ValidationResultIdentifier::silver_stations_uniqueness_suite/20260505_201227-silver_stations_uniqueness_checkpoint/20260505T201256.350689Z/silver_stations_uniqueness_asset_datasource-silver_stations_uniqueness_asset": {
+            "validation_result": {
+              "success": true,
+              "results": [
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_to_exist",
+                    "kwargs": {
+                      "column": "_station_id",
+                      "batch_id": "silver_stations_uniqueness_asset_datasource-silver_stations_uniqueness_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {},
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_values_to_not_be_null",
+                    "kwargs": {
+                      "column": "_station_id",
+                      "batch_id": "silver_stations_uniqueness_asset_datasource-silver_stations_uniqueness_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {
+                    "element_count": 2,
+                    "unexpected_count": 0,
+                    "unexpected_percent": 0.0,
+                    "partial_unexpected_list": [],
+                    "partial_unexpected_counts": []
+                  },
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_values_to_be_unique",
+                    "kwargs": {
+                      "column": "_station_id",
+                      "batch_id": "silver_stations_uniqueness_asset_datasource-silver_stations_uniqueness_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {
+                    "element_count": 2,
+                    "unexpected_count": 0,
+                    "unexpected_percent": 0.0,
+                    "partial_unexpected_list": [],
+                    "missing_count": 0,
+                    "missing_percent": 0.0,
+                    "unexpected_percent_total": 0.0,
+                    "unexpected_percent_nonmissing": 0.0,
+                    "partial_unexpected_counts": []
+                  },
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                }
+              ],
+              "evaluation_parameters": {},
+              "statistics": {
+                "evaluated_expectations": 3,
+                "successful_expectations": 3,
+                "unsuccessful_expectations": 0,
+                "success_percent": 100.0
+              },
+              "meta": {
+                "great_expectations_version": "0.18.21",
+                "expectation_suite_name": "silver_stations_uniqueness_suite",
+                "run_id": {
+                  "run_name": "20260505_201227-silver_stations_uniqueness_checkpoint",
+                  "run_time": "2026-05-05T22:12:56.350689+02:00"
+                },
+                "batch_spec": {
+                  "batch_data": "SparkDataFrame"
+                },
+                "batch_markers": {
+                  "ge_load_time": "20260505T201256.357695Z"
+                },
+                "active_batch_definition": {
+                  "datasource_name": "silver_stations_uniqueness_asset_datasource",
+                  "data_connector_name": "fluent",
+                  "data_asset_name": "silver_stations_uniqueness_asset",
+                  "batch_identifiers": {}
+                },
+                "validation_time": "20260505T201256.362688Z",
+                "checkpoint_name": "silver_stations_uniqueness_checkpoint",
+                "validation_id": null,
+                "checkpoint_id": null
+              }
+            },
+            "actions_results": {
+              "store_validation_result": {
+                "class": "StoreValidationResultAction"
+              },
+              "update_data_docs": {
+                "local_site": "file://C:\\Users\\DELL\\Documents\\vscode_simplon\\brief_qualite_eau_local\\quality\\.gx_runtime\\gx\\uncommitted/data_docs/local_site/validations%5Csilver_stations_uniqueness_suite%5C20260505_201227-silver_stations_uniqueness_checkpoint%5C20260505T201256.350689Z%5Csilver_stations_uniqueness_asset_datasource-silver_stations_uniqueness_asset.html",
+                "class": "UpdateDataDocsAction"
+              }
+            }
+          }
+        },
+        "checkpoint_config": {
+          "template_name": null,
+          "run_name_template": "20260505_201227-silver_stations_uniqueness_checkpoint",
+          "notify_on": null,
+          "module_name": "great_expectations.checkpoint",
+          "name": "silver_stations_uniqueness_checkpoint",
+          "config_version": 1.0,
+          "evaluation_parameters": {},
+          "notify_with": null,
+          "expectation_suite_name": "silver_stations_uniqueness_suite",
+          "action_list": [
+            {
+              "name": "store_validation_result",
+              "action": {
+                "class_name": "StoreValidationResultAction"
+              }
+            },
+            {
+              "name": "update_data_docs",
+              "action": {
+                "class_name": "UpdateDataDocsAction"
+              }
+            }
+          ],
+          "runtime_configuration": {},
+          "class_name": "Checkpoint",
+          "site_names": null,
+          "profilers": [],
+          "default_validation_id": null,
+          "batch_request": {
+            "datasource_name": "silver_stations_uniqueness_asset_datasource",
+            "data_asset_name": "silver_stations_uniqueness_asset",
+            "options": {},
+            "batch_slice": null
+          },
+          "validations": [],
+          "ge_cloud_id": null,
+          "slack_webhook": null,
+          "expectation_suite_ge_cloud_id": null
+        },
+        "success": true
+      }
+    },
+    {
+      "validation_name": "silver_mesures_schema_suite",
+      "success": true,
+      "checkpoint_result": {
+        "run_id": {
+          "run_name": "20260505_201227-silver_mesures_checkpoint",
+          "run_time": "2026-05-05T22:13:01.504445+02:00"
+        },
+        "run_results": {
+          "ValidationResultIdentifier::silver_mesures_schema_suite/20260505_201227-silver_mesures_checkpoint/20260505T201301.504445Z/silver_mesures_asset_datasource-silver_mesures_asset": {
+            "validation_result": {
+              "success": true,
+              "results": [
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_table_columns_to_match_ordered_list",
+                    "kwargs": {
+                      "column_list": [
+                        "code_prelevement",
+                        "reference_analyse",
+                        "code_commune",
+                        "nom_commune_norm",
+                        "nom_departement_norm",
+                        "date_prelevement_ts",
+                        "mois_prelevement",
+                        "code_parametre",
+                        "code_parametre_se",
+                        "code_parametre_cas",
+                        "libelle_parametre_norm",
+                        "code_type_parametre",
+                        "categorie_parametre",
+                        "code_lieu_analyse",
+                        "resultat_parse",
+                        "resultat_alphanumerique",
+                        "est_sous_seuil",
+                        "est_sur_seuil",
+                        "libelle_unite_norm",
+                        "limite_qualite_parametre",
+                        "reference_qualite_parametre",
+                        "nom_distributeur",
+                        "nom_uge",
+                        "nom_moa",
+                        "reseaux",
+                        "_resultat_manquant",
+                        "_est_outlier",
+                        "_bronze_ingestion_ts",
+                        "_silver_timestamp",
+                        "annee_prelevement",
+                        "code_departement"
+                      ],
+                      "batch_id": "silver_mesures_asset_datasource-silver_mesures_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {
+                    "observed_value": [
+                      "code_prelevement",
+                      "reference_analyse",
+                      "code_commune",
+                      "nom_commune_norm",
+                      "nom_departement_norm",
+                      "date_prelevement_ts",
+                      "mois_prelevement",
+                      "code_parametre",
+                      "code_parametre_se",
+                      "code_parametre_cas",
+                      "libelle_parametre_norm",
+                      "code_type_parametre",
+                      "categorie_parametre",
+                      "code_lieu_analyse",
+                      "resultat_parse",
+                      "resultat_alphanumerique",
+                      "est_sous_seuil",
+                      "est_sur_seuil",
+                      "libelle_unite_norm",
+                      "limite_qualite_parametre",
+                      "reference_qualite_parametre",
+                      "nom_distributeur",
+                      "nom_uge",
+                      "nom_moa",
+                      "reseaux",
+                      "_resultat_manquant",
+                      "_est_outlier",
+                      "_bronze_ingestion_ts",
+                      "_silver_timestamp",
+                      "annee_prelevement",
+                      "code_departement"
+                    ]
+                  },
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_table_column_count_to_equal",
+                    "kwargs": {
+                      "value": 31,
+                      "batch_id": "silver_mesures_asset_datasource-silver_mesures_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {
+                    "observed_value": 31
+                  },
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_table_row_count_to_be_between",
+                    "kwargs": {
+                      "min_value": 1,
+                      "batch_id": "silver_mesures_asset_datasource-silver_mesures_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {
+                    "observed_value": 25898
+                  },
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_to_exist",
+                    "kwargs": {
+                      "column": "code_prelevement",
+                      "batch_id": "silver_mesures_asset_datasource-silver_mesures_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {},
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_values_to_be_in_type_list",
+                    "kwargs": {
+                      "column": "code_prelevement",
+                      "type_list": [
+                        "StringType"
+                      ],
+                      "batch_id": "silver_mesures_asset_datasource-silver_mesures_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {
+                    "observed_value": "StringType"
+                  },
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_values_to_not_be_null",
+                    "kwargs": {
+                      "column": "code_prelevement",
+                      "mostly": 0.95,
+                      "batch_id": "silver_mesures_asset_datasource-silver_mesures_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {
+                    "element_count": 25898,
+                    "unexpected_count": 0,
+                    "unexpected_percent": 0.0,
+                    "partial_unexpected_list": [],
+                    "partial_unexpected_counts": []
+                  },
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_to_exist",
+                    "kwargs": {
+                      "column": "reference_analyse",
+                      "batch_id": "silver_mesures_asset_datasource-silver_mesures_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {},
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_values_to_be_in_type_list",
+                    "kwargs": {
+                      "column": "reference_analyse",
+                      "type_list": [
+                        "StringType"
+                      ],
+                      "batch_id": "silver_mesures_asset_datasource-silver_mesures_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {
+                    "observed_value": "StringType"
+                  },
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_to_exist",
+                    "kwargs": {
+                      "column": "code_commune",
+                      "batch_id": "silver_mesures_asset_datasource-silver_mesures_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {},
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_values_to_be_in_type_list",
+                    "kwargs": {
+                      "column": "code_commune",
+                      "type_list": [
+                        "StringType"
+                      ],
+                      "batch_id": "silver_mesures_asset_datasource-silver_mesures_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {
+                    "observed_value": "StringType"
+                  },
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_values_to_not_be_null",
+                    "kwargs": {
+                      "column": "code_commune",
+                      "mostly": 0.95,
+                      "batch_id": "silver_mesures_asset_datasource-silver_mesures_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {
+                    "element_count": 25898,
+                    "unexpected_count": 0,
+                    "unexpected_percent": 0.0,
+                    "partial_unexpected_list": [],
+                    "partial_unexpected_counts": []
+                  },
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_to_exist",
+                    "kwargs": {
+                      "column": "nom_commune_norm",
+                      "batch_id": "silver_mesures_asset_datasource-silver_mesures_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {},
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_values_to_be_in_type_list",
+                    "kwargs": {
+                      "column": "nom_commune_norm",
+                      "type_list": [
+                        "StringType"
+                      ],
+                      "batch_id": "silver_mesures_asset_datasource-silver_mesures_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {
+                    "observed_value": "StringType"
+                  },
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_values_to_not_be_null",
+                    "kwargs": {
+                      "column": "nom_commune_norm",
+                      "mostly": 0.95,
+                      "batch_id": "silver_mesures_asset_datasource-silver_mesures_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {
+                    "element_count": 25898,
+                    "unexpected_count": 0,
+                    "unexpected_percent": 0.0,
+                    "partial_unexpected_list": [],
+                    "partial_unexpected_counts": []
+                  },
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_to_exist",
+                    "kwargs": {
+                      "column": "nom_departement_norm",
+                      "batch_id": "silver_mesures_asset_datasource-silver_mesures_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {},
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_values_to_be_in_type_list",
+                    "kwargs": {
+                      "column": "nom_departement_norm",
+                      "type_list": [
+                        "StringType"
+                      ],
+                      "batch_id": "silver_mesures_asset_datasource-silver_mesures_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {
+                    "observed_value": "StringType"
+                  },
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_to_exist",
+                    "kwargs": {
+                      "column": "date_prelevement_ts",
+                      "batch_id": "silver_mesures_asset_datasource-silver_mesures_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {},
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_values_to_be_in_type_list",
+                    "kwargs": {
+                      "column": "date_prelevement_ts",
+                      "type_list": [
+                        "TimestampType"
+                      ],
+                      "batch_id": "silver_mesures_asset_datasource-silver_mesures_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {
+                    "observed_value": "TimestampType"
+                  },
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_values_to_not_be_null",
+                    "kwargs": {
+                      "column": "date_prelevement_ts",
+                      "mostly": 0.95,
+                      "batch_id": "silver_mesures_asset_datasource-silver_mesures_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {
+                    "element_count": 25898,
+                    "unexpected_count": 0,
+                    "unexpected_percent": 0.0,
+                    "partial_unexpected_list": [],
+                    "partial_unexpected_counts": []
+                  },
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_to_exist",
+                    "kwargs": {
+                      "column": "mois_prelevement",
+                      "batch_id": "silver_mesures_asset_datasource-silver_mesures_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {},
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_values_to_be_in_type_list",
+                    "kwargs": {
+                      "column": "mois_prelevement",
+                      "type_list": [
+                        "IntegerType"
+                      ],
+                      "batch_id": "silver_mesures_asset_datasource-silver_mesures_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {
+                    "observed_value": "IntegerType"
+                  },
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_to_exist",
+                    "kwargs": {
+                      "column": "code_parametre",
+                      "batch_id": "silver_mesures_asset_datasource-silver_mesures_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {},
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_values_to_be_in_type_list",
+                    "kwargs": {
+                      "column": "code_parametre",
+                      "type_list": [
+                        "StringType"
+                      ],
+                      "batch_id": "silver_mesures_asset_datasource-silver_mesures_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {
+                    "observed_value": "StringType"
+                  },
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_values_to_not_be_null",
+                    "kwargs": {
+                      "column": "code_parametre",
+                      "mostly": 0.95,
+                      "batch_id": "silver_mesures_asset_datasource-silver_mesures_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {
+                    "element_count": 25898,
+                    "unexpected_count": 0,
+                    "unexpected_percent": 0.0,
+                    "partial_unexpected_list": [],
+                    "partial_unexpected_counts": []
+                  },
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_to_exist",
+                    "kwargs": {
+                      "column": "code_parametre_se",
+                      "batch_id": "silver_mesures_asset_datasource-silver_mesures_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {},
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_values_to_be_in_type_list",
+                    "kwargs": {
+                      "column": "code_parametre_se",
+                      "type_list": [
+                        "StringType"
+                      ],
+                      "batch_id": "silver_mesures_asset_datasource-silver_mesures_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {
+                    "observed_value": "StringType"
+                  },
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_to_exist",
+                    "kwargs": {
+                      "column": "code_parametre_cas",
+                      "batch_id": "silver_mesures_asset_datasource-silver_mesures_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {},
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_values_to_be_in_type_list",
+                    "kwargs": {
+                      "column": "code_parametre_cas",
+                      "type_list": [
+                        "StringType"
+                      ],
+                      "batch_id": "silver_mesures_asset_datasource-silver_mesures_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {
+                    "observed_value": "StringType"
+                  },
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_to_exist",
+                    "kwargs": {
+                      "column": "libelle_parametre_norm",
+                      "batch_id": "silver_mesures_asset_datasource-silver_mesures_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {},
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_values_to_be_in_type_list",
+                    "kwargs": {
+                      "column": "libelle_parametre_norm",
+                      "type_list": [
+                        "StringType"
+                      ],
+                      "batch_id": "silver_mesures_asset_datasource-silver_mesures_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {
+                    "observed_value": "StringType"
+                  },
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_values_to_not_be_null",
+                    "kwargs": {
+                      "column": "libelle_parametre_norm",
+                      "mostly": 0.95,
+                      "batch_id": "silver_mesures_asset_datasource-silver_mesures_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {
+                    "element_count": 25898,
+                    "unexpected_count": 0,
+                    "unexpected_percent": 0.0,
+                    "partial_unexpected_list": [],
+                    "partial_unexpected_counts": []
+                  },
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_to_exist",
+                    "kwargs": {
+                      "column": "code_type_parametre",
+                      "batch_id": "silver_mesures_asset_datasource-silver_mesures_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {},
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_values_to_be_in_type_list",
+                    "kwargs": {
+                      "column": "code_type_parametre",
+                      "type_list": [
+                        "StringType"
+                      ],
+                      "batch_id": "silver_mesures_asset_datasource-silver_mesures_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {
+                    "observed_value": "StringType"
+                  },
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_to_exist",
+                    "kwargs": {
+                      "column": "categorie_parametre",
+                      "batch_id": "silver_mesures_asset_datasource-silver_mesures_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {},
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_values_to_be_in_type_list",
+                    "kwargs": {
+                      "column": "categorie_parametre",
+                      "type_list": [
+                        "StringType"
+                      ],
+                      "batch_id": "silver_mesures_asset_datasource-silver_mesures_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {
+                    "observed_value": "StringType"
+                  },
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_to_exist",
+                    "kwargs": {
+                      "column": "code_lieu_analyse",
+                      "batch_id": "silver_mesures_asset_datasource-silver_mesures_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {},
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_values_to_be_in_type_list",
+                    "kwargs": {
+                      "column": "code_lieu_analyse",
+                      "type_list": [
+                        "StringType"
+                      ],
+                      "batch_id": "silver_mesures_asset_datasource-silver_mesures_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {
+                    "observed_value": "StringType"
+                  },
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_to_exist",
+                    "kwargs": {
+                      "column": "resultat_parse",
+                      "batch_id": "silver_mesures_asset_datasource-silver_mesures_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {},
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_values_to_be_in_type_list",
+                    "kwargs": {
+                      "column": "resultat_parse",
+                      "type_list": [
+                        "DoubleType",
+                        "FloatType"
+                      ],
+                      "batch_id": "silver_mesures_asset_datasource-silver_mesures_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {
+                    "observed_value": "DoubleType"
+                  },
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_to_exist",
+                    "kwargs": {
+                      "column": "resultat_alphanumerique",
+                      "batch_id": "silver_mesures_asset_datasource-silver_mesures_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {},
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_values_to_be_in_type_list",
+                    "kwargs": {
+                      "column": "resultat_alphanumerique",
+                      "type_list": [
+                        "StringType"
+                      ],
+                      "batch_id": "silver_mesures_asset_datasource-silver_mesures_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {
+                    "observed_value": "StringType"
+                  },
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_to_exist",
+                    "kwargs": {
+                      "column": "est_sous_seuil",
+                      "batch_id": "silver_mesures_asset_datasource-silver_mesures_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {},
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_values_to_be_in_type_list",
+                    "kwargs": {
+                      "column": "est_sous_seuil",
+                      "type_list": [
+                        "BooleanType"
+                      ],
+                      "batch_id": "silver_mesures_asset_datasource-silver_mesures_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {
+                    "observed_value": "BooleanType"
+                  },
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_to_exist",
+                    "kwargs": {
+                      "column": "est_sur_seuil",
+                      "batch_id": "silver_mesures_asset_datasource-silver_mesures_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {},
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_values_to_be_in_type_list",
+                    "kwargs": {
+                      "column": "est_sur_seuil",
+                      "type_list": [
+                        "BooleanType"
+                      ],
+                      "batch_id": "silver_mesures_asset_datasource-silver_mesures_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {
+                    "observed_value": "BooleanType"
+                  },
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_to_exist",
+                    "kwargs": {
+                      "column": "libelle_unite_norm",
+                      "batch_id": "silver_mesures_asset_datasource-silver_mesures_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {},
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_values_to_be_in_type_list",
+                    "kwargs": {
+                      "column": "libelle_unite_norm",
+                      "type_list": [
+                        "StringType"
+                      ],
+                      "batch_id": "silver_mesures_asset_datasource-silver_mesures_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {
+                    "observed_value": "StringType"
+                  },
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_to_exist",
+                    "kwargs": {
+                      "column": "limite_qualite_parametre",
+                      "batch_id": "silver_mesures_asset_datasource-silver_mesures_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {},
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_values_to_be_in_type_list",
+                    "kwargs": {
+                      "column": "limite_qualite_parametre",
+                      "type_list": [
+                        "StringType"
+                      ],
+                      "batch_id": "silver_mesures_asset_datasource-silver_mesures_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {
+                    "observed_value": "StringType"
+                  },
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_to_exist",
+                    "kwargs": {
+                      "column": "reference_qualite_parametre",
+                      "batch_id": "silver_mesures_asset_datasource-silver_mesures_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {},
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_values_to_be_in_type_list",
+                    "kwargs": {
+                      "column": "reference_qualite_parametre",
+                      "type_list": [
+                        "StringType"
+                      ],
+                      "batch_id": "silver_mesures_asset_datasource-silver_mesures_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {
+                    "observed_value": "StringType"
+                  },
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_to_exist",
+                    "kwargs": {
+                      "column": "nom_distributeur",
+                      "batch_id": "silver_mesures_asset_datasource-silver_mesures_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {},
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_values_to_be_in_type_list",
+                    "kwargs": {
+                      "column": "nom_distributeur",
+                      "type_list": [
+                        "StringType"
+                      ],
+                      "batch_id": "silver_mesures_asset_datasource-silver_mesures_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {
+                    "observed_value": "StringType"
+                  },
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_to_exist",
+                    "kwargs": {
+                      "column": "nom_uge",
+                      "batch_id": "silver_mesures_asset_datasource-silver_mesures_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {},
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_values_to_be_in_type_list",
+                    "kwargs": {
+                      "column": "nom_uge",
+                      "type_list": [
+                        "StringType"
+                      ],
+                      "batch_id": "silver_mesures_asset_datasource-silver_mesures_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {
+                    "observed_value": "StringType"
+                  },
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_to_exist",
+                    "kwargs": {
+                      "column": "nom_moa",
+                      "batch_id": "silver_mesures_asset_datasource-silver_mesures_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {},
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_values_to_be_in_type_list",
+                    "kwargs": {
+                      "column": "nom_moa",
+                      "type_list": [
+                        "StringType"
+                      ],
+                      "batch_id": "silver_mesures_asset_datasource-silver_mesures_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {
+                    "observed_value": "StringType"
+                  },
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_to_exist",
+                    "kwargs": {
+                      "column": "reseaux",
+                      "batch_id": "silver_mesures_asset_datasource-silver_mesures_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {},
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_values_to_be_in_type_list",
+                    "kwargs": {
+                      "column": "reseaux",
+                      "type_list": [
+                        "StringType"
+                      ],
+                      "batch_id": "silver_mesures_asset_datasource-silver_mesures_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {
+                    "observed_value": "StringType"
+                  },
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_to_exist",
+                    "kwargs": {
+                      "column": "_resultat_manquant",
+                      "batch_id": "silver_mesures_asset_datasource-silver_mesures_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {},
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_values_to_be_in_type_list",
+                    "kwargs": {
+                      "column": "_resultat_manquant",
+                      "type_list": [
+                        "BooleanType"
+                      ],
+                      "batch_id": "silver_mesures_asset_datasource-silver_mesures_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {
+                    "observed_value": "BooleanType"
+                  },
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_to_exist",
+                    "kwargs": {
+                      "column": "_est_outlier",
+                      "batch_id": "silver_mesures_asset_datasource-silver_mesures_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {},
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_values_to_be_in_type_list",
+                    "kwargs": {
+                      "column": "_est_outlier",
+                      "type_list": [
+                        "BooleanType"
+                      ],
+                      "batch_id": "silver_mesures_asset_datasource-silver_mesures_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {
+                    "observed_value": "BooleanType"
+                  },
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_to_exist",
+                    "kwargs": {
+                      "column": "_bronze_ingestion_ts",
+                      "batch_id": "silver_mesures_asset_datasource-silver_mesures_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {},
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_values_to_be_in_type_list",
+                    "kwargs": {
+                      "column": "_bronze_ingestion_ts",
+                      "type_list": [
+                        "TimestampType"
+                      ],
+                      "batch_id": "silver_mesures_asset_datasource-silver_mesures_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {
+                    "observed_value": "TimestampType"
+                  },
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_to_exist",
+                    "kwargs": {
+                      "column": "_silver_timestamp",
+                      "batch_id": "silver_mesures_asset_datasource-silver_mesures_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {},
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_values_to_be_in_type_list",
+                    "kwargs": {
+                      "column": "_silver_timestamp",
+                      "type_list": [
+                        "TimestampType"
+                      ],
+                      "batch_id": "silver_mesures_asset_datasource-silver_mesures_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {
+                    "observed_value": "TimestampType"
+                  },
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_to_exist",
+                    "kwargs": {
+                      "column": "annee_prelevement",
+                      "batch_id": "silver_mesures_asset_datasource-silver_mesures_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {},
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_values_to_be_in_type_list",
+                    "kwargs": {
+                      "column": "annee_prelevement",
+                      "type_list": [
+                        "IntegerType"
+                      ],
+                      "batch_id": "silver_mesures_asset_datasource-silver_mesures_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {
+                    "observed_value": "IntegerType"
+                  },
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_values_to_not_be_null",
+                    "kwargs": {
+                      "column": "annee_prelevement",
+                      "mostly": 0.95,
+                      "batch_id": "silver_mesures_asset_datasource-silver_mesures_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {
+                    "element_count": 25898,
+                    "unexpected_count": 0,
+                    "unexpected_percent": 0.0,
+                    "partial_unexpected_list": [],
+                    "partial_unexpected_counts": []
+                  },
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_to_exist",
+                    "kwargs": {
+                      "column": "code_departement",
+                      "batch_id": "silver_mesures_asset_datasource-silver_mesures_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {},
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_values_to_be_in_type_list",
+                    "kwargs": {
+                      "column": "code_departement",
+                      "type_list": [
+                        "IntegerType"
+                      ],
+                      "batch_id": "silver_mesures_asset_datasource-silver_mesures_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {
+                    "observed_value": "IntegerType"
+                  },
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_values_to_not_be_null",
+                    "kwargs": {
+                      "column": "code_departement",
+                      "mostly": 0.95,
+                      "batch_id": "silver_mesures_asset_datasource-silver_mesures_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {
+                    "element_count": 25898,
+                    "unexpected_count": 0,
+                    "unexpected_percent": 0.0,
+                    "partial_unexpected_list": [],
+                    "partial_unexpected_counts": []
+                  },
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                }
+              ],
+              "evaluation_parameters": {},
+              "statistics": {
+                "evaluated_expectations": 73,
+                "successful_expectations": 73,
+                "unsuccessful_expectations": 0,
+                "success_percent": 100.0
+              },
+              "meta": {
+                "great_expectations_version": "0.18.21",
+                "expectation_suite_name": "silver_mesures_schema_suite",
+                "run_id": {
+                  "run_name": "20260505_201227-silver_mesures_checkpoint",
+                  "run_time": "2026-05-05T22:13:01.504445+02:00"
+                },
+                "batch_spec": {
+                  "batch_data": "SparkDataFrame"
+                },
+                "batch_markers": {
+                  "ge_load_time": "20260505T201301.521606Z"
+                },
+                "active_batch_definition": {
+                  "datasource_name": "silver_mesures_asset_datasource",
+                  "data_connector_name": "fluent",
+                  "data_asset_name": "silver_mesures_asset",
+                  "batch_identifiers": {}
+                },
+                "validation_time": "20260505T201301.526607Z",
+                "checkpoint_name": "silver_mesures_checkpoint",
+                "validation_id": null,
+                "checkpoint_id": null
+              }
+            },
+            "actions_results": {
+              "store_validation_result": {
+                "class": "StoreValidationResultAction"
+              },
+              "update_data_docs": {
+                "local_site": "file://C:\\Users\\DELL\\Documents\\vscode_simplon\\brief_qualite_eau_local\\quality\\.gx_runtime\\gx\\uncommitted/data_docs/local_site/validations%5Csilver_mesures_schema_suite%5C20260505_201227-silver_mesures_checkpoint%5C20260505T201301.504445Z%5Csilver_mesures_asset_datasource-silver_mesures_asset.html",
+                "class": "UpdateDataDocsAction"
+              }
+            }
+          }
+        },
+        "checkpoint_config": {
+          "template_name": null,
+          "run_name_template": "20260505_201227-silver_mesures_checkpoint",
+          "notify_on": null,
+          "module_name": "great_expectations.checkpoint",
+          "name": "silver_mesures_checkpoint",
+          "config_version": 1.0,
+          "evaluation_parameters": {},
+          "notify_with": null,
+          "expectation_suite_name": "silver_mesures_schema_suite",
+          "action_list": [
+            {
+              "name": "store_validation_result",
+              "action": {
+                "class_name": "StoreValidationResultAction"
+              }
+            },
+            {
+              "name": "update_data_docs",
+              "action": {
+                "class_name": "UpdateDataDocsAction"
+              }
+            }
+          ],
+          "runtime_configuration": {},
+          "class_name": "Checkpoint",
+          "site_names": null,
+          "profilers": [],
+          "default_validation_id": null,
+          "batch_request": {
+            "datasource_name": "silver_mesures_asset_datasource",
+            "data_asset_name": "silver_mesures_asset",
+            "options": {},
+            "batch_slice": null
+          },
+          "validations": [],
+          "ge_cloud_id": null,
+          "slack_webhook": null,
+          "expectation_suite_ge_cloud_id": null
+        },
+        "success": true
+      }
+    },
+    {
+      "validation_name": "silver_mesures_range_pH_suite",
+      "success": true,
+      "checkpoint_result": {
+        "run_id": {
+          "run_name": "20260505_201227-silver_mesures_range_pH_checkpoint",
+          "run_time": "2026-05-05T22:13:05.126827+02:00"
+        },
+        "run_results": {
+          "ValidationResultIdentifier::silver_mesures_range_pH_suite/20260505_201227-silver_mesures_range_pH_checkpoint/20260505T201305.126827Z/silver_mesures_range_pH_asset_datasource-silver_mesures_range_pH_asset": {
+            "validation_result": {
+              "success": true,
+              "results": [
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_table_row_count_to_be_between",
+                    "kwargs": {
+                      "min_value": 0,
+                      "batch_id": "silver_mesures_range_pH_asset_datasource-silver_mesures_range_pH_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {
+                    "observed_value": 1241
+                  },
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_values_to_be_between",
+                    "kwargs": {
+                      "column": "resultat_parse",
+                      "max_value": 10.0,
+                      "min_value": 4.0,
+                      "mostly": 1.0,
+                      "batch_id": "silver_mesures_range_pH_asset_datasource-silver_mesures_range_pH_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {
+                    "element_count": 1241,
+                    "unexpected_count": 0,
+                    "unexpected_percent": 0.0,
+                    "partial_unexpected_list": [],
+                    "missing_count": 0,
+                    "missing_percent": 0.0,
+                    "unexpected_percent_total": 0.0,
+                    "unexpected_percent_nonmissing": 0.0,
+                    "partial_unexpected_counts": []
+                  },
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                }
+              ],
+              "evaluation_parameters": {},
+              "statistics": {
+                "evaluated_expectations": 2,
+                "successful_expectations": 2,
+                "unsuccessful_expectations": 0,
+                "success_percent": 100.0
+              },
+              "meta": {
+                "great_expectations_version": "0.18.21",
+                "expectation_suite_name": "silver_mesures_range_pH_suite",
+                "run_id": {
+                  "run_name": "20260505_201227-silver_mesures_range_pH_checkpoint",
+                  "run_time": "2026-05-05T22:13:05.126827+02:00"
+                },
+                "batch_spec": {
+                  "batch_data": "SparkDataFrame"
+                },
+                "batch_markers": {
+                  "ge_load_time": "20260505T201305.143045Z"
+                },
+                "active_batch_definition": {
+                  "datasource_name": "silver_mesures_range_pH_asset_datasource",
+                  "data_connector_name": "fluent",
+                  "data_asset_name": "silver_mesures_range_pH_asset",
+                  "batch_identifiers": {}
+                },
+                "validation_time": "20260505T201305.148619Z",
+                "checkpoint_name": "silver_mesures_range_pH_checkpoint",
+                "validation_id": null,
+                "checkpoint_id": null
+              }
+            },
+            "actions_results": {
+              "store_validation_result": {
+                "class": "StoreValidationResultAction"
+              },
+              "update_data_docs": {
+                "local_site": "file://C:\\Users\\DELL\\Documents\\vscode_simplon\\brief_qualite_eau_local\\quality\\.gx_runtime\\gx\\uncommitted/data_docs/local_site/validations%5Csilver_mesures_range_pH_suite%5C20260505_201227-silver_mesures_range_pH_checkpoint%5C20260505T201305.126827Z%5Csilver_mesures_range_pH_asset_datasource-silver_mesures_range_pH_asset.html",
+                "class": "UpdateDataDocsAction"
+              }
+            }
+          }
+        },
+        "checkpoint_config": {
+          "template_name": null,
+          "run_name_template": "20260505_201227-silver_mesures_range_pH_checkpoint",
+          "notify_on": null,
+          "module_name": "great_expectations.checkpoint",
+          "name": "silver_mesures_range_pH_checkpoint",
+          "config_version": 1.0,
+          "evaluation_parameters": {},
+          "notify_with": null,
+          "expectation_suite_name": "silver_mesures_range_pH_suite",
+          "action_list": [
+            {
+              "name": "store_validation_result",
+              "action": {
+                "class_name": "StoreValidationResultAction"
+              }
+            },
+            {
+              "name": "update_data_docs",
+              "action": {
+                "class_name": "UpdateDataDocsAction"
+              }
+            }
+          ],
+          "runtime_configuration": {},
+          "class_name": "Checkpoint",
+          "site_names": null,
+          "profilers": [],
+          "default_validation_id": null,
+          "batch_request": {
+            "datasource_name": "silver_mesures_range_pH_asset_datasource",
+            "data_asset_name": "silver_mesures_range_pH_asset",
+            "options": {},
+            "batch_slice": null
+          },
+          "validations": [],
+          "ge_cloud_id": null,
+          "slack_webhook": null,
+          "expectation_suite_ge_cloud_id": null
+        },
+        "success": true
+      }
+    },
+    {
+      "validation_name": "silver_mesures_range_nitrates_mg_l_suite",
+      "success": true,
+      "checkpoint_result": {
+        "run_id": {
+          "run_name": "20260505_201227-silver_mesures_range_nitrates_mg_l_checkpoint",
+          "run_time": "2026-05-05T22:13:06.547553+02:00"
+        },
+        "run_results": {
+          "ValidationResultIdentifier::silver_mesures_range_nitrates_mg_l_suite/20260505_201227-silver_mesures_range_nitrates_mg_l_checkpoint/20260505T201306.547553Z/silver_mesures_range_nitrates_mg_l_asset_datasource-silver_mesures_range_nitrates_mg_l_asset": {
+            "validation_result": {
+              "success": true,
+              "results": [
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_table_row_count_to_be_between",
+                    "kwargs": {
+                      "min_value": 0,
+                      "batch_id": "silver_mesures_range_nitrates_mg_l_asset_datasource-silver_mesures_range_nitrates_mg_l_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {
+                    "observed_value": 9
+                  },
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_values_to_be_between",
+                    "kwargs": {
+                      "column": "resultat_parse",
+                      "max_value": 200.0,
+                      "min_value": 0.0,
+                      "mostly": 1.0,
+                      "batch_id": "silver_mesures_range_nitrates_mg_l_asset_datasource-silver_mesures_range_nitrates_mg_l_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {
+                    "element_count": 9,
+                    "unexpected_count": 0,
+                    "unexpected_percent": 0.0,
+                    "partial_unexpected_list": [],
+                    "missing_count": 0,
+                    "missing_percent": 0.0,
+                    "unexpected_percent_total": 0.0,
+                    "unexpected_percent_nonmissing": 0.0,
+                    "partial_unexpected_counts": []
+                  },
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                }
+              ],
+              "evaluation_parameters": {},
+              "statistics": {
+                "evaluated_expectations": 2,
+                "successful_expectations": 2,
+                "unsuccessful_expectations": 0,
+                "success_percent": 100.0
+              },
+              "meta": {
+                "great_expectations_version": "0.18.21",
+                "expectation_suite_name": "silver_mesures_range_nitrates_mg_l_suite",
+                "run_id": {
+                  "run_name": "20260505_201227-silver_mesures_range_nitrates_mg_l_checkpoint",
+                  "run_time": "2026-05-05T22:13:06.547553+02:00"
+                },
+                "batch_spec": {
+                  "batch_data": "SparkDataFrame"
+                },
+                "batch_markers": {
+                  "ge_load_time": "20260505T201306.556136Z"
+                },
+                "active_batch_definition": {
+                  "datasource_name": "silver_mesures_range_nitrates_mg_l_asset_datasource",
+                  "data_connector_name": "fluent",
+                  "data_asset_name": "silver_mesures_range_nitrates_mg_l_asset",
+                  "batch_identifiers": {}
+                },
+                "validation_time": "20260505T201306.560159Z",
+                "checkpoint_name": "silver_mesures_range_nitrates_mg_l_checkpoint",
+                "validation_id": null,
+                "checkpoint_id": null
+              }
+            },
+            "actions_results": {
+              "store_validation_result": {
+                "class": "StoreValidationResultAction"
+              },
+              "update_data_docs": {
+                "local_site": "file://C:\\Users\\DELL\\Documents\\vscode_simplon\\brief_qualite_eau_local\\quality\\.gx_runtime\\gx\\uncommitted/data_docs/local_site/validations%5Csilver_mesures_range_nitrates_mg_l_suite%5C20260505_201227-silver_mesures_range_nitrates_mg_l_checkpoint%5C20260505T201306.547553Z%5Csilver_mesures_range_nitrates_mg_l_asset_datasource-silver_mesures_range_nitrates_mg_l_asset.html",
+                "class": "UpdateDataDocsAction"
+              }
+            }
+          }
+        },
+        "checkpoint_config": {
+          "template_name": null,
+          "run_name_template": "20260505_201227-silver_mesures_range_nitrates_mg_l_checkpoint",
+          "notify_on": null,
+          "module_name": "great_expectations.checkpoint",
+          "name": "silver_mesures_range_nitrates_mg_l_checkpoint",
+          "config_version": 1.0,
+          "evaluation_parameters": {},
+          "notify_with": null,
+          "expectation_suite_name": "silver_mesures_range_nitrates_mg_l_suite",
+          "action_list": [
+            {
+              "name": "store_validation_result",
+              "action": {
+                "class_name": "StoreValidationResultAction"
+              }
+            },
+            {
+              "name": "update_data_docs",
+              "action": {
+                "class_name": "UpdateDataDocsAction"
+              }
+            }
+          ],
+          "runtime_configuration": {},
+          "class_name": "Checkpoint",
+          "site_names": null,
+          "profilers": [],
+          "default_validation_id": null,
+          "batch_request": {
+            "datasource_name": "silver_mesures_range_nitrates_mg_l_asset_datasource",
+            "data_asset_name": "silver_mesures_range_nitrates_mg_l_asset",
+            "options": {},
+            "batch_slice": null
+          },
+          "validations": [],
+          "ge_cloud_id": null,
+          "slack_webhook": null,
+          "expectation_suite_ge_cloud_id": null
+        },
+        "success": true
+      }
+    },
+    {
+      "validation_name": "silver_mesures_range_nitrites_mg_l_suite",
+      "success": true,
+      "checkpoint_result": {
+        "run_id": {
+          "run_name": "20260505_201227-silver_mesures_range_nitrites_mg_l_checkpoint",
+          "run_time": "2026-05-05T22:13:07.808786+02:00"
+        },
+        "run_results": {
+          "ValidationResultIdentifier::silver_mesures_range_nitrites_mg_l_suite/20260505_201227-silver_mesures_range_nitrites_mg_l_checkpoint/20260505T201307.808786Z/silver_mesures_range_nitrites_mg_l_asset_datasource-silver_mesures_range_nitrites_mg_l_asset": {
+            "validation_result": {
+              "success": true,
+              "results": [
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_table_row_count_to_be_between",
+                    "kwargs": {
+                      "min_value": 0,
+                      "batch_id": "silver_mesures_range_nitrites_mg_l_asset_datasource-silver_mesures_range_nitrites_mg_l_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {
+                    "observed_value": 49
+                  },
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_values_to_be_between",
+                    "kwargs": {
+                      "column": "resultat_parse",
+                      "max_value": 10.0,
+                      "min_value": 0.0,
+                      "mostly": 1.0,
+                      "batch_id": "silver_mesures_range_nitrites_mg_l_asset_datasource-silver_mesures_range_nitrites_mg_l_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {
+                    "element_count": 49,
+                    "unexpected_count": 0,
+                    "unexpected_percent": 0.0,
+                    "partial_unexpected_list": [],
+                    "missing_count": 0,
+                    "missing_percent": 0.0,
+                    "unexpected_percent_total": 0.0,
+                    "unexpected_percent_nonmissing": 0.0,
+                    "partial_unexpected_counts": []
+                  },
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                }
+              ],
+              "evaluation_parameters": {},
+              "statistics": {
+                "evaluated_expectations": 2,
+                "successful_expectations": 2,
+                "unsuccessful_expectations": 0,
+                "success_percent": 100.0
+              },
+              "meta": {
+                "great_expectations_version": "0.18.21",
+                "expectation_suite_name": "silver_mesures_range_nitrites_mg_l_suite",
+                "run_id": {
+                  "run_name": "20260505_201227-silver_mesures_range_nitrites_mg_l_checkpoint",
+                  "run_time": "2026-05-05T22:13:07.808786+02:00"
+                },
+                "batch_spec": {
+                  "batch_data": "SparkDataFrame"
+                },
+                "batch_markers": {
+                  "ge_load_time": "20260505T201307.818416Z"
+                },
+                "active_batch_definition": {
+                  "datasource_name": "silver_mesures_range_nitrites_mg_l_asset_datasource",
+                  "data_connector_name": "fluent",
+                  "data_asset_name": "silver_mesures_range_nitrites_mg_l_asset",
+                  "batch_identifiers": {}
+                },
+                "validation_time": "20260505T201307.823397Z",
+                "checkpoint_name": "silver_mesures_range_nitrites_mg_l_checkpoint",
+                "validation_id": null,
+                "checkpoint_id": null
+              }
+            },
+            "actions_results": {
+              "store_validation_result": {
+                "class": "StoreValidationResultAction"
+              },
+              "update_data_docs": {
+                "local_site": "file://C:\\Users\\DELL\\Documents\\vscode_simplon\\brief_qualite_eau_local\\quality\\.gx_runtime\\gx\\uncommitted/data_docs/local_site/validations%5Csilver_mesures_range_nitrites_mg_l_suite%5C20260505_201227-silver_mesures_range_nitrites_mg_l_checkpoint%5C20260505T201307.808786Z%5Csilver_mesures_range_nitrites_mg_l_asset_datasource-silver_mesures_range_nitrites_mg_l_asset.html",
+                "class": "UpdateDataDocsAction"
+              }
+            }
+          }
+        },
+        "checkpoint_config": {
+          "template_name": null,
+          "run_name_template": "20260505_201227-silver_mesures_range_nitrites_mg_l_checkpoint",
+          "notify_on": null,
+          "module_name": "great_expectations.checkpoint",
+          "name": "silver_mesures_range_nitrites_mg_l_checkpoint",
+          "config_version": 1.0,
+          "evaluation_parameters": {},
+          "notify_with": null,
+          "expectation_suite_name": "silver_mesures_range_nitrites_mg_l_suite",
+          "action_list": [
+            {
+              "name": "store_validation_result",
+              "action": {
+                "class_name": "StoreValidationResultAction"
+              }
+            },
+            {
+              "name": "update_data_docs",
+              "action": {
+                "class_name": "UpdateDataDocsAction"
+              }
+            }
+          ],
+          "runtime_configuration": {},
+          "class_name": "Checkpoint",
+          "site_names": null,
+          "profilers": [],
+          "default_validation_id": null,
+          "batch_request": {
+            "datasource_name": "silver_mesures_range_nitrites_mg_l_asset_datasource",
+            "data_asset_name": "silver_mesures_range_nitrites_mg_l_asset",
+            "options": {},
+            "batch_slice": null
+          },
+          "validations": [],
+          "ge_cloud_id": null,
+          "slack_webhook": null,
+          "expectation_suite_ge_cloud_id": null
+        },
+        "success": true
+      }
+    },
+    {
+      "validation_name": "silver_mesures_range_conductivite_suite",
+      "success": true,
+      "checkpoint_result": {
+        "run_id": {
+          "run_name": "20260505_201227-silver_mesures_range_conductivite_checkpoint",
+          "run_time": "2026-05-05T22:13:09.272772+02:00"
+        },
+        "run_results": {
+          "ValidationResultIdentifier::silver_mesures_range_conductivite_suite/20260505_201227-silver_mesures_range_conductivite_checkpoint/20260505T201309.272772Z/silver_mesures_range_conductivite_asset_datasource-silver_mesures_range_conductivite_asset": {
+            "validation_result": {
+              "success": true,
+              "results": [
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_table_row_count_to_be_between",
+                    "kwargs": {
+                      "min_value": 0,
+                      "batch_id": "silver_mesures_range_conductivite_asset_datasource-silver_mesures_range_conductivite_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {
+                    "observed_value": 1242
+                  },
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_values_to_be_between",
+                    "kwargs": {
+                      "column": "resultat_parse",
+                      "max_value": 5000.0,
+                      "min_value": 0.0,
+                      "mostly": 1.0,
+                      "batch_id": "silver_mesures_range_conductivite_asset_datasource-silver_mesures_range_conductivite_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {
+                    "element_count": 1242,
+                    "unexpected_count": 0,
+                    "unexpected_percent": 0.0,
+                    "partial_unexpected_list": [],
+                    "missing_count": 0,
+                    "missing_percent": 0.0,
+                    "unexpected_percent_total": 0.0,
+                    "unexpected_percent_nonmissing": 0.0,
+                    "partial_unexpected_counts": []
+                  },
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                }
+              ],
+              "evaluation_parameters": {},
+              "statistics": {
+                "evaluated_expectations": 2,
+                "successful_expectations": 2,
+                "unsuccessful_expectations": 0,
+                "success_percent": 100.0
+              },
+              "meta": {
+                "great_expectations_version": "0.18.21",
+                "expectation_suite_name": "silver_mesures_range_conductivite_suite",
+                "run_id": {
+                  "run_name": "20260505_201227-silver_mesures_range_conductivite_checkpoint",
+                  "run_time": "2026-05-05T22:13:09.272772+02:00"
+                },
+                "batch_spec": {
+                  "batch_data": "SparkDataFrame"
+                },
+                "batch_markers": {
+                  "ge_load_time": "20260505T201309.285772Z"
+                },
+                "active_batch_definition": {
+                  "datasource_name": "silver_mesures_range_conductivite_asset_datasource",
+                  "data_connector_name": "fluent",
+                  "data_asset_name": "silver_mesures_range_conductivite_asset",
+                  "batch_identifiers": {}
+                },
+                "validation_time": "20260505T201309.291774Z",
+                "checkpoint_name": "silver_mesures_range_conductivite_checkpoint",
+                "validation_id": null,
+                "checkpoint_id": null
+              }
+            },
+            "actions_results": {
+              "store_validation_result": {
+                "class": "StoreValidationResultAction"
+              },
+              "update_data_docs": {
+                "local_site": "file://C:\\Users\\DELL\\Documents\\vscode_simplon\\brief_qualite_eau_local\\quality\\.gx_runtime\\gx\\uncommitted/data_docs/local_site/validations%5Csilver_mesures_range_conductivite_suite%5C20260505_201227-silver_mesures_range_conductivite_checkpoint%5C20260505T201309.272772Z%5Csilver_mesures_range_conductivite_asset_datasource-silver_mesures_range_conductivite_asset.html",
+                "class": "UpdateDataDocsAction"
+              }
+            }
+          }
+        },
+        "checkpoint_config": {
+          "template_name": null,
+          "run_name_template": "20260505_201227-silver_mesures_range_conductivite_checkpoint",
+          "notify_on": null,
+          "module_name": "great_expectations.checkpoint",
+          "name": "silver_mesures_range_conductivite_checkpoint",
+          "config_version": 1.0,
+          "evaluation_parameters": {},
+          "notify_with": null,
+          "expectation_suite_name": "silver_mesures_range_conductivite_suite",
+          "action_list": [
+            {
+              "name": "store_validation_result",
+              "action": {
+                "class_name": "StoreValidationResultAction"
+              }
+            },
+            {
+              "name": "update_data_docs",
+              "action": {
+                "class_name": "UpdateDataDocsAction"
+              }
+            }
+          ],
+          "runtime_configuration": {},
+          "class_name": "Checkpoint",
+          "site_names": null,
+          "profilers": [],
+          "default_validation_id": null,
+          "batch_request": {
+            "datasource_name": "silver_mesures_range_conductivite_asset_datasource",
+            "data_asset_name": "silver_mesures_range_conductivite_asset",
+            "options": {},
+            "batch_slice": null
+          },
+          "validations": [],
+          "ge_cloud_id": null,
+          "slack_webhook": null,
+          "expectation_suite_ge_cloud_id": null
+        },
+        "success": true
+      }
+    },
+    {
+      "validation_name": "silver_mesures_range_turbidite_ntu_suite",
+      "success": true,
+      "checkpoint_result": {
+        "run_id": {
+          "run_name": "20260505_201227-silver_mesures_range_turbidite_ntu_checkpoint",
+          "run_time": "2026-05-05T22:13:10.684375+02:00"
+        },
+        "run_results": {
+          "ValidationResultIdentifier::silver_mesures_range_turbidite_ntu_suite/20260505_201227-silver_mesures_range_turbidite_ntu_checkpoint/20260505T201310.684375Z/silver_mesures_range_turbidite_ntu_asset_datasource-silver_mesures_range_turbidite_ntu_asset": {
+            "validation_result": {
+              "success": true,
+              "results": [
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_table_row_count_to_be_between",
+                    "kwargs": {
+                      "min_value": 0,
+                      "batch_id": "silver_mesures_range_turbidite_ntu_asset_datasource-silver_mesures_range_turbidite_ntu_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {
+                    "observed_value": 1241
+                  },
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_values_to_be_between",
+                    "kwargs": {
+                      "column": "resultat_parse",
+                      "max_value": 100.0,
+                      "min_value": 0.0,
+                      "mostly": 1.0,
+                      "batch_id": "silver_mesures_range_turbidite_ntu_asset_datasource-silver_mesures_range_turbidite_ntu_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {
+                    "element_count": 1241,
+                    "unexpected_count": 0,
+                    "unexpected_percent": 0.0,
+                    "partial_unexpected_list": [],
+                    "missing_count": 0,
+                    "missing_percent": 0.0,
+                    "unexpected_percent_total": 0.0,
+                    "unexpected_percent_nonmissing": 0.0,
+                    "partial_unexpected_counts": []
+                  },
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                }
+              ],
+              "evaluation_parameters": {},
+              "statistics": {
+                "evaluated_expectations": 2,
+                "successful_expectations": 2,
+                "unsuccessful_expectations": 0,
+                "success_percent": 100.0
+              },
+              "meta": {
+                "great_expectations_version": "0.18.21",
+                "expectation_suite_name": "silver_mesures_range_turbidite_ntu_suite",
+                "run_id": {
+                  "run_name": "20260505_201227-silver_mesures_range_turbidite_ntu_checkpoint",
+                  "run_time": "2026-05-05T22:13:10.684375+02:00"
+                },
+                "batch_spec": {
+                  "batch_data": "SparkDataFrame"
+                },
+                "batch_markers": {
+                  "ge_load_time": "20260505T201310.690370Z"
+                },
+                "active_batch_definition": {
+                  "datasource_name": "silver_mesures_range_turbidite_ntu_asset_datasource",
+                  "data_connector_name": "fluent",
+                  "data_asset_name": "silver_mesures_range_turbidite_ntu_asset",
+                  "batch_identifiers": {}
+                },
+                "validation_time": "20260505T201310.696379Z",
+                "checkpoint_name": "silver_mesures_range_turbidite_ntu_checkpoint",
+                "validation_id": null,
+                "checkpoint_id": null
+              }
+            },
+            "actions_results": {
+              "store_validation_result": {
+                "class": "StoreValidationResultAction"
+              },
+              "update_data_docs": {
+                "local_site": "file://C:\\Users\\DELL\\Documents\\vscode_simplon\\brief_qualite_eau_local\\quality\\.gx_runtime\\gx\\uncommitted/data_docs/local_site/validations%5Csilver_mesures_range_turbidite_ntu_suite%5C20260505_201227-silver_mesures_range_turbidite_ntu_checkpoint%5C20260505T201310.684375Z%5Csilver_mesures_range_turbidite_ntu_asset_datasource-silver_mesures_range_turbidite_ntu_asset.html",
+                "class": "UpdateDataDocsAction"
+              }
+            }
+          }
+        },
+        "checkpoint_config": {
+          "template_name": null,
+          "run_name_template": "20260505_201227-silver_mesures_range_turbidite_ntu_checkpoint",
+          "notify_on": null,
+          "module_name": "great_expectations.checkpoint",
+          "name": "silver_mesures_range_turbidite_ntu_checkpoint",
+          "config_version": 1.0,
+          "evaluation_parameters": {},
+          "notify_with": null,
+          "expectation_suite_name": "silver_mesures_range_turbidite_ntu_suite",
+          "action_list": [
+            {
+              "name": "store_validation_result",
+              "action": {
+                "class_name": "StoreValidationResultAction"
+              }
+            },
+            {
+              "name": "update_data_docs",
+              "action": {
+                "class_name": "UpdateDataDocsAction"
+              }
+            }
+          ],
+          "runtime_configuration": {},
+          "class_name": "Checkpoint",
+          "site_names": null,
+          "profilers": [],
+          "default_validation_id": null,
+          "batch_request": {
+            "datasource_name": "silver_mesures_range_turbidite_ntu_asset_datasource",
+            "data_asset_name": "silver_mesures_range_turbidite_ntu_asset",
+            "options": {},
+            "batch_slice": null
+          },
+          "validations": [],
+          "ge_cloud_id": null,
+          "slack_webhook": null,
+          "expectation_suite_ge_cloud_id": null
+        },
+        "success": true
+      }
+    },
+    {
+      "validation_name": "silver_conformite_schema_suite",
+      "success": true,
+      "checkpoint_result": {
+        "run_id": {
+          "run_name": "20260505_201227-silver_conformite_checkpoint",
+          "run_time": "2026-05-05T22:13:15.475525+02:00"
+        },
+        "run_results": {
+          "ValidationResultIdentifier::silver_conformite_schema_suite/20260505_201227-silver_conformite_checkpoint/20260505T201315.475525Z/silver_conformite_asset_datasource-silver_conformite_asset": {
+            "validation_result": {
+              "success": true,
+              "results": [
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_table_columns_to_match_ordered_list",
+                    "kwargs": {
+                      "column_list": [
+                        "code_prelevement",
+                        "date_prelevement_ts",
+                        "code_commune",
+                        "nom_commune_norm",
+                        "nom_departement_norm",
+                        "nom_distributeur",
+                        "nom_uge",
+                        "conformite_bact_limite_norm",
+                        "conformite_pc_limite_norm",
+                        "conformite_bact_ref_norm",
+                        "conformite_pc_ref_norm",
+                        "conclusion_conformite_prelevement",
+                        "reseaux",
+                        "conformite_globale",
+                        "_silver_timestamp",
+                        "annee_prelevement",
+                        "code_departement"
+                      ],
+                      "batch_id": "silver_conformite_asset_datasource-silver_conformite_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {
+                    "observed_value": [
+                      "code_prelevement",
+                      "date_prelevement_ts",
+                      "code_commune",
+                      "nom_commune_norm",
+                      "nom_departement_norm",
+                      "nom_distributeur",
+                      "nom_uge",
+                      "conformite_bact_limite_norm",
+                      "conformite_pc_limite_norm",
+                      "conformite_bact_ref_norm",
+                      "conformite_pc_ref_norm",
+                      "conclusion_conformite_prelevement",
+                      "reseaux",
+                      "conformite_globale",
+                      "_silver_timestamp",
+                      "annee_prelevement",
+                      "code_departement"
+                    ]
+                  },
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_table_column_count_to_equal",
+                    "kwargs": {
+                      "value": 17,
+                      "batch_id": "silver_conformite_asset_datasource-silver_conformite_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {
+                    "observed_value": 17
+                  },
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_table_row_count_to_be_between",
+                    "kwargs": {
+                      "min_value": 1,
+                      "batch_id": "silver_conformite_asset_datasource-silver_conformite_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {
+                    "observed_value": 1289
+                  },
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_to_exist",
+                    "kwargs": {
+                      "column": "code_prelevement",
+                      "batch_id": "silver_conformite_asset_datasource-silver_conformite_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {},
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_values_to_be_in_type_list",
+                    "kwargs": {
+                      "column": "code_prelevement",
+                      "type_list": [
+                        "StringType"
+                      ],
+                      "batch_id": "silver_conformite_asset_datasource-silver_conformite_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {
+                    "observed_value": "StringType"
+                  },
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_values_to_not_be_null",
+                    "kwargs": {
+                      "column": "code_prelevement",
+                      "mostly": 0.95,
+                      "batch_id": "silver_conformite_asset_datasource-silver_conformite_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {
+                    "element_count": 1289,
+                    "unexpected_count": 0,
+                    "unexpected_percent": 0.0,
+                    "partial_unexpected_list": [],
+                    "partial_unexpected_counts": []
+                  },
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_to_exist",
+                    "kwargs": {
+                      "column": "date_prelevement_ts",
+                      "batch_id": "silver_conformite_asset_datasource-silver_conformite_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {},
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_values_to_be_in_type_list",
+                    "kwargs": {
+                      "column": "date_prelevement_ts",
+                      "type_list": [
+                        "TimestampType"
+                      ],
+                      "batch_id": "silver_conformite_asset_datasource-silver_conformite_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {
+                    "observed_value": "TimestampType"
+                  },
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_values_to_not_be_null",
+                    "kwargs": {
+                      "column": "date_prelevement_ts",
+                      "mostly": 0.95,
+                      "batch_id": "silver_conformite_asset_datasource-silver_conformite_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {
+                    "element_count": 1289,
+                    "unexpected_count": 0,
+                    "unexpected_percent": 0.0,
+                    "partial_unexpected_list": [],
+                    "partial_unexpected_counts": []
+                  },
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_to_exist",
+                    "kwargs": {
+                      "column": "code_commune",
+                      "batch_id": "silver_conformite_asset_datasource-silver_conformite_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {},
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_values_to_be_in_type_list",
+                    "kwargs": {
+                      "column": "code_commune",
+                      "type_list": [
+                        "StringType"
+                      ],
+                      "batch_id": "silver_conformite_asset_datasource-silver_conformite_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {
+                    "observed_value": "StringType"
+                  },
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_values_to_not_be_null",
+                    "kwargs": {
+                      "column": "code_commune",
+                      "mostly": 0.95,
+                      "batch_id": "silver_conformite_asset_datasource-silver_conformite_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {
+                    "element_count": 1289,
+                    "unexpected_count": 0,
+                    "unexpected_percent": 0.0,
+                    "partial_unexpected_list": [],
+                    "partial_unexpected_counts": []
+                  },
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_to_exist",
+                    "kwargs": {
+                      "column": "nom_commune_norm",
+                      "batch_id": "silver_conformite_asset_datasource-silver_conformite_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {},
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_values_to_be_in_type_list",
+                    "kwargs": {
+                      "column": "nom_commune_norm",
+                      "type_list": [
+                        "StringType"
+                      ],
+                      "batch_id": "silver_conformite_asset_datasource-silver_conformite_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {
+                    "observed_value": "StringType"
+                  },
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_values_to_not_be_null",
+                    "kwargs": {
+                      "column": "nom_commune_norm",
+                      "mostly": 0.95,
+                      "batch_id": "silver_conformite_asset_datasource-silver_conformite_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {
+                    "element_count": 1289,
+                    "unexpected_count": 0,
+                    "unexpected_percent": 0.0,
+                    "partial_unexpected_list": [],
+                    "partial_unexpected_counts": []
+                  },
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_to_exist",
+                    "kwargs": {
+                      "column": "nom_departement_norm",
+                      "batch_id": "silver_conformite_asset_datasource-silver_conformite_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {},
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_values_to_be_in_type_list",
+                    "kwargs": {
+                      "column": "nom_departement_norm",
+                      "type_list": [
+                        "StringType"
+                      ],
+                      "batch_id": "silver_conformite_asset_datasource-silver_conformite_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {
+                    "observed_value": "StringType"
+                  },
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_to_exist",
+                    "kwargs": {
+                      "column": "nom_distributeur",
+                      "batch_id": "silver_conformite_asset_datasource-silver_conformite_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {},
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_values_to_be_in_type_list",
+                    "kwargs": {
+                      "column": "nom_distributeur",
+                      "type_list": [
+                        "StringType"
+                      ],
+                      "batch_id": "silver_conformite_asset_datasource-silver_conformite_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {
+                    "observed_value": "StringType"
+                  },
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_to_exist",
+                    "kwargs": {
+                      "column": "nom_uge",
+                      "batch_id": "silver_conformite_asset_datasource-silver_conformite_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {},
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_values_to_be_in_type_list",
+                    "kwargs": {
+                      "column": "nom_uge",
+                      "type_list": [
+                        "StringType"
+                      ],
+                      "batch_id": "silver_conformite_asset_datasource-silver_conformite_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {
+                    "observed_value": "StringType"
+                  },
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_to_exist",
+                    "kwargs": {
+                      "column": "conformite_bact_limite_norm",
+                      "batch_id": "silver_conformite_asset_datasource-silver_conformite_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {},
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_values_to_be_in_type_list",
+                    "kwargs": {
+                      "column": "conformite_bact_limite_norm",
+                      "type_list": [
+                        "StringType"
+                      ],
+                      "batch_id": "silver_conformite_asset_datasource-silver_conformite_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {
+                    "observed_value": "StringType"
+                  },
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_values_to_be_in_set",
+                    "kwargs": {
+                      "column": "conformite_bact_limite_norm",
+                      "mostly": 0.95,
+                      "value_set": [
+                        "C",
+                        "N",
+                        "S"
+                      ],
+                      "batch_id": "silver_conformite_asset_datasource-silver_conformite_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {
+                    "element_count": 1289,
+                    "unexpected_count": 0,
+                    "unexpected_percent": 0.0,
+                    "partial_unexpected_list": [],
+                    "missing_count": 0,
+                    "missing_percent": 0.0,
+                    "unexpected_percent_total": 0.0,
+                    "unexpected_percent_nonmissing": 0.0,
+                    "partial_unexpected_counts": []
+                  },
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_to_exist",
+                    "kwargs": {
+                      "column": "conformite_pc_limite_norm",
+                      "batch_id": "silver_conformite_asset_datasource-silver_conformite_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {},
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_values_to_be_in_type_list",
+                    "kwargs": {
+                      "column": "conformite_pc_limite_norm",
+                      "type_list": [
+                        "StringType"
+                      ],
+                      "batch_id": "silver_conformite_asset_datasource-silver_conformite_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {
+                    "observed_value": "StringType"
+                  },
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_values_to_be_in_set",
+                    "kwargs": {
+                      "column": "conformite_pc_limite_norm",
+                      "mostly": 0.95,
+                      "value_set": [
+                        "C",
+                        "N",
+                        "S"
+                      ],
+                      "batch_id": "silver_conformite_asset_datasource-silver_conformite_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {
+                    "element_count": 1289,
+                    "unexpected_count": 0,
+                    "unexpected_percent": 0.0,
+                    "partial_unexpected_list": [],
+                    "missing_count": 0,
+                    "missing_percent": 0.0,
+                    "unexpected_percent_total": 0.0,
+                    "unexpected_percent_nonmissing": 0.0,
+                    "partial_unexpected_counts": []
+                  },
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_to_exist",
+                    "kwargs": {
+                      "column": "conformite_bact_ref_norm",
+                      "batch_id": "silver_conformite_asset_datasource-silver_conformite_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {},
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_values_to_be_in_type_list",
+                    "kwargs": {
+                      "column": "conformite_bact_ref_norm",
+                      "type_list": [
+                        "StringType"
+                      ],
+                      "batch_id": "silver_conformite_asset_datasource-silver_conformite_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {
+                    "observed_value": "StringType"
+                  },
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_values_to_be_in_set",
+                    "kwargs": {
+                      "column": "conformite_bact_ref_norm",
+                      "mostly": 0.95,
+                      "value_set": [
+                        "C",
+                        "N",
+                        "S"
+                      ],
+                      "batch_id": "silver_conformite_asset_datasource-silver_conformite_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {
+                    "element_count": 1289,
+                    "unexpected_count": 0,
+                    "unexpected_percent": 0.0,
+                    "partial_unexpected_list": [],
+                    "missing_count": 0,
+                    "missing_percent": 0.0,
+                    "unexpected_percent_total": 0.0,
+                    "unexpected_percent_nonmissing": 0.0,
+                    "partial_unexpected_counts": []
+                  },
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_to_exist",
+                    "kwargs": {
+                      "column": "conformite_pc_ref_norm",
+                      "batch_id": "silver_conformite_asset_datasource-silver_conformite_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {},
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_values_to_be_in_type_list",
+                    "kwargs": {
+                      "column": "conformite_pc_ref_norm",
+                      "type_list": [
+                        "StringType"
+                      ],
+                      "batch_id": "silver_conformite_asset_datasource-silver_conformite_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {
+                    "observed_value": "StringType"
+                  },
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_values_to_be_in_set",
+                    "kwargs": {
+                      "column": "conformite_pc_ref_norm",
+                      "mostly": 0.95,
+                      "value_set": [
+                        "C",
+                        "N",
+                        "S"
+                      ],
+                      "batch_id": "silver_conformite_asset_datasource-silver_conformite_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {
+                    "element_count": 1289,
+                    "unexpected_count": 0,
+                    "unexpected_percent": 0.0,
+                    "partial_unexpected_list": [],
+                    "missing_count": 0,
+                    "missing_percent": 0.0,
+                    "unexpected_percent_total": 0.0,
+                    "unexpected_percent_nonmissing": 0.0,
+                    "partial_unexpected_counts": []
+                  },
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_to_exist",
+                    "kwargs": {
+                      "column": "conclusion_conformite_prelevement",
+                      "batch_id": "silver_conformite_asset_datasource-silver_conformite_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {},
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_values_to_be_in_type_list",
+                    "kwargs": {
+                      "column": "conclusion_conformite_prelevement",
+                      "type_list": [
+                        "StringType"
+                      ],
+                      "batch_id": "silver_conformite_asset_datasource-silver_conformite_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {
+                    "observed_value": "StringType"
+                  },
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_to_exist",
+                    "kwargs": {
+                      "column": "reseaux",
+                      "batch_id": "silver_conformite_asset_datasource-silver_conformite_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {},
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_values_to_be_in_type_list",
+                    "kwargs": {
+                      "column": "reseaux",
+                      "type_list": [
+                        "StringType"
+                      ],
+                      "batch_id": "silver_conformite_asset_datasource-silver_conformite_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {
+                    "observed_value": "StringType"
+                  },
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_to_exist",
+                    "kwargs": {
+                      "column": "conformite_globale",
+                      "batch_id": "silver_conformite_asset_datasource-silver_conformite_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {},
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_values_to_be_in_type_list",
+                    "kwargs": {
+                      "column": "conformite_globale",
+                      "type_list": [
+                        "StringType"
+                      ],
+                      "batch_id": "silver_conformite_asset_datasource-silver_conformite_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {
+                    "observed_value": "StringType"
+                  },
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_values_to_not_be_null",
+                    "kwargs": {
+                      "column": "conformite_globale",
+                      "mostly": 0.95,
+                      "batch_id": "silver_conformite_asset_datasource-silver_conformite_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {
+                    "element_count": 1289,
+                    "unexpected_count": 0,
+                    "unexpected_percent": 0.0,
+                    "partial_unexpected_list": [],
+                    "partial_unexpected_counts": []
+                  },
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_values_to_be_in_set",
+                    "kwargs": {
+                      "column": "conformite_globale",
+                      "value_set": [
+                        "C",
+                        "N",
+                        "S"
+                      ],
+                      "batch_id": "silver_conformite_asset_datasource-silver_conformite_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {
+                    "element_count": 1289,
+                    "unexpected_count": 0,
+                    "unexpected_percent": 0.0,
+                    "partial_unexpected_list": [],
+                    "missing_count": 0,
+                    "missing_percent": 0.0,
+                    "unexpected_percent_total": 0.0,
+                    "unexpected_percent_nonmissing": 0.0,
+                    "partial_unexpected_counts": []
+                  },
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_to_exist",
+                    "kwargs": {
+                      "column": "_silver_timestamp",
+                      "batch_id": "silver_conformite_asset_datasource-silver_conformite_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {},
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_values_to_be_in_type_list",
+                    "kwargs": {
+                      "column": "_silver_timestamp",
+                      "type_list": [
+                        "TimestampType"
+                      ],
+                      "batch_id": "silver_conformite_asset_datasource-silver_conformite_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {
+                    "observed_value": "TimestampType"
+                  },
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_to_exist",
+                    "kwargs": {
+                      "column": "annee_prelevement",
+                      "batch_id": "silver_conformite_asset_datasource-silver_conformite_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {},
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_values_to_be_in_type_list",
+                    "kwargs": {
+                      "column": "annee_prelevement",
+                      "type_list": [
+                        "IntegerType"
+                      ],
+                      "batch_id": "silver_conformite_asset_datasource-silver_conformite_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {
+                    "observed_value": "IntegerType"
+                  },
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_values_to_not_be_null",
+                    "kwargs": {
+                      "column": "annee_prelevement",
+                      "mostly": 0.95,
+                      "batch_id": "silver_conformite_asset_datasource-silver_conformite_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {
+                    "element_count": 1289,
+                    "unexpected_count": 0,
+                    "unexpected_percent": 0.0,
+                    "partial_unexpected_list": [],
+                    "partial_unexpected_counts": []
+                  },
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_to_exist",
+                    "kwargs": {
+                      "column": "code_departement",
+                      "batch_id": "silver_conformite_asset_datasource-silver_conformite_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {},
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_values_to_be_in_type_list",
+                    "kwargs": {
+                      "column": "code_departement",
+                      "type_list": [
+                        "IntegerType"
+                      ],
+                      "batch_id": "silver_conformite_asset_datasource-silver_conformite_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {
+                    "observed_value": "IntegerType"
+                  },
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                },
+                {
+                  "success": true,
+                  "expectation_config": {
+                    "expectation_type": "expect_column_values_to_not_be_null",
+                    "kwargs": {
+                      "column": "code_departement",
+                      "mostly": 0.95,
+                      "batch_id": "silver_conformite_asset_datasource-silver_conformite_asset"
+                    },
+                    "meta": {}
+                  },
+                  "result": {
+                    "element_count": 1289,
+                    "unexpected_count": 0,
+                    "unexpected_percent": 0.0,
+                    "partial_unexpected_list": [],
+                    "partial_unexpected_counts": []
+                  },
+                  "meta": {},
+                  "exception_info": {
+                    "raised_exception": false,
+                    "exception_traceback": null,
+                    "exception_message": null
+                  }
+                }
+              ],
+              "evaluation_parameters": {},
+              "statistics": {
+                "evaluated_expectations": 49,
+                "successful_expectations": 49,
+                "unsuccessful_expectations": 0,
+                "success_percent": 100.0
+              },
+              "meta": {
+                "great_expectations_version": "0.18.21",
+                "expectation_suite_name": "silver_conformite_schema_suite",
+                "run_id": {
+                  "run_name": "20260505_201227-silver_conformite_checkpoint",
+                  "run_time": "2026-05-05T22:13:15.475525+02:00"
+                },
+                "batch_spec": {
+                  "batch_data": "SparkDataFrame"
+                },
+                "batch_markers": {
+                  "ge_load_time": "20260505T201315.492194Z"
+                },
+                "active_batch_definition": {
+                  "datasource_name": "silver_conformite_asset_datasource",
+                  "data_connector_name": "fluent",
+                  "data_asset_name": "silver_conformite_asset",
+                  "batch_identifiers": {}
+                },
+                "validation_time": "20260505T201315.498129Z",
+                "checkpoint_name": "silver_conformite_checkpoint",
+                "validation_id": null,
+                "checkpoint_id": null
+              }
+            },
+            "actions_results": {
+              "store_validation_result": {
+                "class": "StoreValidationResultAction"
+              },
+              "update_data_docs": {
+                "local_site": "file://C:\\Users\\DELL\\Documents\\vscode_simplon\\brief_qualite_eau_local\\quality\\.gx_runtime\\gx\\uncommitted/data_docs/local_site/validations%5Csilver_conformite_schema_suite%5C20260505_201227-silver_conformite_checkpoint%5C20260505T201315.475525Z%5Csilver_conformite_asset_datasource-silver_conformite_asset.html",
+                "class": "UpdateDataDocsAction"
+              }
+            }
+          }
+        },
+        "checkpoint_config": {
+          "template_name": null,
+          "run_name_template": "20260505_201227-silver_conformite_checkpoint",
+          "notify_on": null,
+          "module_name": "great_expectations.checkpoint",
+          "name": "silver_conformite_checkpoint",
+          "config_version": 1.0,
+          "evaluation_parameters": {},
+          "notify_with": null,
+          "expectation_suite_name": "silver_conformite_schema_suite",
+          "action_list": [
+            {
+              "name": "store_validation_result",
+              "action": {
+                "class_name": "StoreValidationResultAction"
+              }
+            },
+            {
+              "name": "update_data_docs",
+              "action": {
+                "class_name": "UpdateDataDocsAction"
+              }
+            }
+          ],
+          "runtime_configuration": {},
+          "class_name": "Checkpoint",
+          "site_names": null,
+          "profilers": [],
+          "default_validation_id": null,
+          "batch_request": {
+            "datasource_name": "silver_conformite_asset_datasource",
+            "data_asset_name": "silver_conformite_asset",
+            "options": {},
+            "batch_slice": null
+          },
+          "validations": [],
+          "ge_cloud_id": null,
+          "slack_webhook": null,
+          "expectation_suite_ge_cloud_id": null
+        },
+        "success": true
+      }
+    }
+  ]
+}

@@ -1,0 +1,256 @@
+# =============================================================================
+# config.yml — Pipeline qualité de l'eau
+# Mis à jour avec les vrais schémas des APIs Hub'Eau & Géo API
+# =============================================================================
+
+# -----------------------------------------------------------------------------
+# ENVIRONNEMENT : "local" | "community" | "azure"
+# -----------------------------------------------------------------------------
+environment: local
+
+# -----------------------------------------------------------------------------
+# CHEMINS DE STOCKAGE
+# -----------------------------------------------------------------------------
+storage:
+  local:
+    source:  "./data/raw/"
+    bronze:  "./data/bronze/"
+    silver:  "./data/silver/"
+    gold:    "./data/gold/"
+    logs:    "./data/logs/"
+    config:  "./config/config.yml"
+    format:  "parquet"
+
+  community:
+    source:  "dbfs:/FileStore/water_quality/raw/"
+    bronze:  "dbfs:/FileStore/water_quality/bronze/"
+    silver:  "dbfs:/FileStore/water_quality/silver/"
+    gold:    "dbfs:/FileStore/water_quality/gold/"
+    logs:    "dbfs:/FileStore/water_quality/logs/"
+    config:  "/dbfs/FileStore/water_quality/config/config.yml"
+
+  azure:
+    storage_account:  "<your_storage_account>"
+    container_source: "source"
+    container_bronze: "bronze"
+    container_silver: "silver"
+    container_gold:   "gold"
+    container_logs:   "logs"
+
+# -----------------------------------------------------------------------------
+# BASE DE DONNÉES / METASTORE
+# -----------------------------------------------------------------------------
+database:
+  name:              "water_quality"
+  # Bronze
+  bronze_communes:   "bronze_communes_udi"
+  bronze_resultats:  "bronze_resultats_dis"
+  bronze_geo:        "bronze_geo_communes"
+  # Silver
+  silver_stations:   "silver_stations"
+  silver_mesures:    "silver_mesures"
+  silver_conformite: "silver_conformite"
+  # Gold
+  gold_conformite_commune:   "gold_conformite_commune"
+  gold_evolution_parametres: "gold_evolution_parametres"
+  gold_qualite_region:       "gold_qualite_region"
+  gold_top10_communes:       "gold_top10_communes"
+  gold_non_conformites:      "gold_non_conformites"
+
+# -----------------------------------------------------------------------------
+# APIS
+# -----------------------------------------------------------------------------
+apis:
+
+  # ---------------------------------------------------------------------------
+  # Hub'Eau — Communes / UDI
+  # Schéma réel : code_commune, nom_commune, nom_quartier, code_reseau,
+  #               nom_reseau, debut_alim, annee
+  # ---------------------------------------------------------------------------
+  hubeau_communes:
+    url:         "https://hubeau.eaufrance.fr/api/v1/qualite_eau_potable/communes_udi"
+    description: "Communes et unités de distribution (UDI)"
+    # Champs retournés par l'API (pour documentation)
+    schema:
+      - code_commune    # Ex: "64445"
+      - nom_commune     # Ex: "PAU"
+      - nom_quartier    # Ex: "PAU ECARTS"
+      - code_reseau     # Ex: "064000432"
+      - nom_reseau      # Ex: "PAU"
+      - debut_alim      # Ex: "2010-10-16" (date début alimentation)
+      - annee           # Ex: "2026"
+    params:
+      annee:        null      # Ex: 2023
+      code_commune: "64445"      # Ex: "64445"
+      code_reseau:  null      # Ex: "064000432"
+      nom_commune:  null     # Filtre par défaut — modifier pour élargir
+      nom_reseau:   null
+      fields:       null      # null = toutes les colonnes
+      page:         null
+      size:         null
+      sort:         "asc"
+    pagination:
+      enabled:   false
+      page_size: 15000
+      max_pages: 100
+
+  # ---------------------------------------------------------------------------
+  # Hub'Eau — Résultats des analyses sanitaires
+  # ⚠️  Champ imbriqué : "reseaux" → liste de {code, nom} → sérialisé en JSON string
+  # Format date_prelevement : "2026-02-26T12:55:00Z" (ISO 8601 UTC)
+  # ---------------------------------------------------------------------------
+  hubeau_resultats:
+    url:         "https://hubeau.eaufrance.fr/api/v1/qualite_eau_potable/resultats_dis"
+    description: "Résultats des analyses sanitaires de l'eau distribuée"
+    # Champs retournés par l'API (pour documentation)
+    schema:
+      # Localisation
+      - code_departement
+      - nom_departement
+      - code_commune
+      - nom_commune
+      # Prélèvement
+      - code_prelevement
+      - date_prelevement          # ISO 8601 : "2026-02-26T12:55:00Z"
+      - reference_analyse
+      - code_installation_amont
+      - nom_installation_amont
+      # Paramètre analysé
+      - code_parametre
+      - code_parametre_se
+      - code_parametre_cas
+      - libelle_parametre
+      - libelle_parametre_maj
+      - libelle_parametre_web
+      - code_type_parametre
+      - code_lieu_analyse
+      # Résultat
+      - resultat_alphanumerique   # Ex: "<0,01"
+      - resultat_numerique        # Ex: 0.0
+      - libelle_unite             # Ex: "µg/L"
+      - code_unite
+      - limite_qualite_parametre  # Ex: "<=0,1 µg/L"
+      - reference_qualite_parametre
+      # Conformité
+      - conclusion_conformite_prelevement
+      - conformite_limites_bact_prelevement      # "C" | "N" | "S"
+      - conformite_limites_pc_prelevement
+      - conformite_references_bact_prelevement
+      - conformite_references_pc_prelevement
+      # Distributeur
+      - nom_uge
+      - nom_distributeur
+      - nom_moa
+      # Réseaux (IMBRIQUÉ → sérialisé en string JSON dans Bronze)
+      - reseaux                   # [{"code": "064000432", "nom": "PAU"}]
+    # Traitement spécial champ imbriqué
+    nested_fields:
+      reseaux: "json_string"      # Stratégie : sérialiser en string JSON
+    params:
+      # Filtres géographiques
+      code_commune:       null
+      code_departement:   "64"   # Version plus stable en local : commencer par un seul departement
+      nom_commune:        null
+      nom_distributeur:   null
+      nom_moa:            null
+      # Filtres sur les paramètres
+      code_lieu_analyse:  null
+      code_parametre:     null
+      code_parametre_cas: null
+      code_parametre_se:  null
+      code_prelevement:   null
+      code_reseau:        null
+      libelle_parametre:  null
+      libelle_parametre_maj: null
+      # Filtres sur les résultats
+      borne_inf_resultat: null
+      borne_sup_resultat: null
+      # Filtres conformité
+      conformite_limites_bact_prelevement:    null
+      conformite_limites_pc_prelevement:      null
+      conformite_references_bact_prelevement: null
+      conformite_references_pc_prelevement:   null
+      # Filtres temporels (format YYYY-MM-DD)
+      date_min_prelevement: "2023-01-01"  # Version plus stable en local : limiter d'abord a une seule annee
+      date_max_prelevement: "2025-12-31"  # Elargir ensuite si le run passe correctement
+      # Pagination
+      fields: null
+      page:   null
+      size:   null
+      sort:   "asc"
+    pagination:
+      enabled:   true
+      page_size: 5000
+      max_pages: 500
+
+  # ---------------------------------------------------------------------------
+  # Géo API Gouvernement — Communes
+  # Format retourné : GeoJSON FeatureCollection
+  # Coordonnées : geometry.coordinates → [longitude, latitude]
+  # ---------------------------------------------------------------------------
+  geo_communes:
+    url:         "https://geo.api.gouv.fr/communes"
+    description: "Données géographiques des communes françaises (GeoJSON)"
+    # Champs extraits des properties + geometry
+    schema:
+      - nom             # Ex: "Pau"
+      - code            # Ex: "64445" (code INSEE)
+      - codeDepartement # Ex: "64"
+      - codeRegion      # Ex: "75"
+      - siren
+      - codeEpci
+      - codesPostaux    # Liste → sérialisée en JSON string
+      - population      # Ex: 80441
+      - longitude       # Extrait de geometry.coordinates[0] → -0.3435
+      - latitude        # Extrait de geometry.coordinates[1] → 43.3219
+    nested_fields:
+      codesPostaux: "json_string"   # ["64000"] → '["64000"]'
+    params:
+      codePostal:      null         # Ex: "64000"
+      nom:             null        # Filtre par défaut
+      code:            null         # Ex: "64445"
+      codeDepartement: 64        # Aligne les communes geo avec les resultats Hubeau charges sur le Rhone
+      codeRegion:      null         # Ex: "75"
+      geometry:        "centre"     # "centre" | "contour" | "bbox"
+      format:          "geojson"
+      fields:          "nom,code,codeDepartement,codeRegion,siren,codeEpci,codesPostaux,population,centre"
+    pagination:
+      enabled:   false
+      page_size: 1000
+      max_pages: 1
+
+# -----------------------------------------------------------------------------
+# PARAMÈTRES D'INGESTION
+# -----------------------------------------------------------------------------
+ingestion:
+  write_mode:       "overwrite"
+  overwrite_schema: true
+
+  http:
+    timeout_seconds: 60
+    retry_attempts:  5
+    retry_delay_s:   8
+    request_pause_s: 0.2
+    headers:
+      Accept:     "application/json"
+      User-Agent: "water-quality-pipeline/1.0"
+
+# -----------------------------------------------------------------------------
+# QUALITÉ DES DONNÉES (Great Expectations — Épic 4)
+# -----------------------------------------------------------------------------
+quality:
+  non_null_min_pct: 0.95
+  valeurs_conformite: ["C", "N", "S"]
+  parametres_plages:
+    pH:               { min: 4.0,  max: 10.0  }
+    nitrates_mg_l:    { min: 0.0,  max: 200.0 }
+    nitrites_mg_l:    { min: 0.0,  max: 10.0  }
+    conductivite:     { min: 0.0,  max: 5000.0 }
+    turbidite_ntu:    { min: 0.0,  max: 100.0 }
+
+# -----------------------------------------------------------------------------
+# LOGGING
+# -----------------------------------------------------------------------------
+logging:
+  level:        "INFO"
+  save_reports: true
