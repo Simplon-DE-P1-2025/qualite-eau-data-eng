@@ -15,6 +15,7 @@
 # COMMAND ----------
 
 import datetime
+import importlib.util
 import json
 import shutil
 import sys
@@ -72,19 +73,42 @@ def resolve_project_root_for_imports() -> Path | None:
 project_root_for_imports = resolve_project_root_for_imports()
 if project_root_for_imports and str(project_root_for_imports) not in sys.path:
     sys.path.insert(0, str(project_root_for_imports))
+src_dir_for_imports = None
 if project_root_for_imports:
     src_dir_for_imports = project_root_for_imports / "src"
     if str(src_dir_for_imports) not in sys.path:
         sys.path.insert(0, str(src_dir_for_imports))
 
+
+def load_module_from_path(module_name: str, file_path: Path):
+    spec = importlib.util.spec_from_file_location(module_name, file_path)
+    if spec is None or spec.loader is None:
+        raise ModuleNotFoundError(
+            f"Impossible de charger le module {module_name!r} depuis {file_path}"
+        )
+    module = importlib.util.module_from_spec(spec)
+    sys.modules[module_name] = module
+    spec.loader.exec_module(module)
+    return module
+
 try:
     from src.runtime_env import resolve_runtime_environment
 except ModuleNotFoundError:
-    from runtime_env import resolve_runtime_environment
+    if src_dir_for_imports is None:
+        raise
+    runtime_env = load_module_from_path(
+        "runtime_env_fallback",
+        src_dir_for_imports / "runtime_env.py",
+    )
+    resolve_runtime_environment = runtime_env.resolve_runtime_environment
 
 
 def resolve_project_root() -> Path:
     candidates = []
+
+    if project_root_for_imports is not None:
+        candidates.append(project_root_for_imports)
+        candidates.extend(project_root_for_imports.parents)
 
     try:
         candidates.append(Path(__file__).resolve().parents[2])
@@ -92,7 +116,7 @@ def resolve_project_root() -> Path:
         pass
 
     cwd = Path.cwd().resolve()
-    candidates.extend([cwd, cwd.parent, cwd.parent.parent])
+    candidates.extend([cwd, cwd.parent, cwd.parent.parent, cwd.parent.parent.parent])
 
     if "dbutils" in globals():
         try:
@@ -104,7 +128,11 @@ def resolve_project_root() -> Path:
                 .get()
             )
             workspace_dir = Path("/Workspace") / notebook_path.lstrip("/")
-            candidates.extend([workspace_dir.parent, workspace_dir.parent.parent])
+            candidates.extend([
+                workspace_dir.parent,
+                workspace_dir.parent.parent,
+                workspace_dir.parent.parent.parent,
+            ])
         except Exception:
             pass
 
@@ -160,9 +188,15 @@ NON_NULL_MIN_PCT = float(cfg["quality"]["non_null_min_pct"])
 VALID_CONFORMITE_VALUES = list(cfg["quality"]["valeurs_conformite"])
 PARAM_RANGES = dict(cfg["quality"]["parametres_plages"])
 
-QUALITY_DIR = PROJECT_ROOT / "notebooks" / "quality"
-GX_RUNTIME_ROOT = QUALITY_DIR / ".gx_runtime"
-DOCS_QUALITY_DIR = PROJECT_ROOT / "docs" / "quality"
+if ENV == "azure":
+    QUALITY_DIR = Path("/dbfs/FileStore/water_quality/quality")
+    GX_RUNTIME_ROOT = QUALITY_DIR / ".gx_runtime"
+    DOCS_QUALITY_DIR = QUALITY_DIR / "docs_quality"
+else:
+    QUALITY_DIR = PROJECT_ROOT / "notebooks" / "quality"
+    GX_RUNTIME_ROOT = QUALITY_DIR / ".gx_runtime"
+    DOCS_QUALITY_DIR = PROJECT_ROOT / "docs" / "quality"
+
 DOCS_LATEST_DIR = DOCS_QUALITY_DIR / "latest"
 DOCS_ARCHIVE_DIR = DOCS_QUALITY_DIR / "archive"
 RUN_TS = datetime.datetime.utcnow().strftime("%Y%m%d_%H%M%S")
