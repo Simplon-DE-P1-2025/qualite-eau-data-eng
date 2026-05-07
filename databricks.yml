@@ -62,8 +62,8 @@ resources:
           depends_on:
             - task_key: silver
           job_cluster_key: pipeline_cluster
-          spark_python_task:
-            python_file: notebooks/quality/great_expectations_validation.py
+          notebook_task:
+            notebook_path: notebooks/quality/great_expectations_validation.py
           libraries:
             - pypi:
                 package: pyyaml
