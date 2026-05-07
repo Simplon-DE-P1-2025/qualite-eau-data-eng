@@ -1,3 +1,10 @@
+## [1.2.7](https://github.com/Simplon-DE-P1-2025/qualite-eau-data-eng/compare/v1.2.6...v1.2.7) (2026-05-07)
+
+
+### Bug Fixes
+
+* **databricks:** harden bundle imports, config lookup, and quality artifacts ([aa34eb8](https://github.com/Simplon-DE-P1-2025/qualite-eau-data-eng/commit/aa34eb86961f1d338db557fa3fbdada8c74953ba))
+
 ## [1.2.6](https://github.com/Simplon-DE-P1-2025/qualite-eau-data-eng/compare/v1.2.5...v1.2.6) (2026-05-07)
 
 
