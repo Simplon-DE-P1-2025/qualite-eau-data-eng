@@ -204,6 +204,84 @@ py -3.11 -m pip install pyspark pyyaml requests duckdb fastapi uvicorn flask plo
 
 Le repo peut maintenant etre execute via [databricks.yml](./databricks.yml).
 
+### Role de `databricks.yml`
+
+Le fichier [databricks.yml](./databricks.yml) est la definition declarative du deploiement Databricks du projet.
+
+Il sert a decrire:
+
+- le nom du bundle
+- la target de deploiement `dev`
+- le workspace Databricks cible
+- la configuration cluster des jobs
+- les variables de runtime du projet
+- les jobs Databricks a creer ou mettre a jour
+- les taches Bronze, Silver, Quality et Gold
+
+Autrement dit:
+
+- le code Python contient la logique metier
+- `config/config.yml` contient la configuration fonctionnelle
+- `databricks.yml` contient la configuration de deploiement Databricks
+
+Le fichier n'execute rien tout seul. Il est lu par le Databricks CLI lors des commandes:
+
+```bash
+databricks bundle validate -t dev
+databricks bundle deploy -t dev
+databricks bundle run -t dev <job_name>
+```
+
+### Ce que contient le Bundle
+
+Le bundle declare aujourd'hui:
+
+- un job principal:
+  - `water_quality_full_pipeline`
+- trois jobs Bronze cibles:
+  - `water_quality_bronze_geo`
+  - `water_quality_bronze_communes`
+  - `water_quality_bronze_resultats`
+
+Le job principal enchaine:
+
+1. Bronze
+2. Silver
+3. Quality
+4. Gold
+
+Les jobs Bronze specialises permettent de relancer uniquement une source API sans tout rejouer.
+
+### Comment le fichier est utilise
+
+Quand tu lances `bundle deploy`, Databricks lit `databricks.yml` et:
+
+- cree les jobs s'ils n'existent pas
+- met a jour les jobs s'ils existent deja
+- applique la configuration cluster
+- attache les librairies Python declarees
+- prepare les taches avec leurs scripts ou notebooks
+
+Quand tu lances `bundle run`, Databricks execute ensuite le job deja deployee.
+
+### Ce qui est parametrable dans `databricks.yml`
+
+Tu peux adapter facilement:
+
+- le `host` du workspace
+- le `root_path` du bundle dans le workspace
+- la version runtime Spark
+- le type de noeud
+- l'autoscaling min/max
+- les librairies Python
+- l'ordre et le contenu des taches
+
+### Cas particulier de la tache Quality
+
+La validation Great Expectations est declaree en `notebook_task` et non en `spark_python_task`.
+
+La raison est que [great_expectations_validation.py](./notebooks/quality/great_expectations_validation.py) est un notebook Databricks exporte, reconnu comme notebook par le validateur du Bundle.
+
 ### Ce qui est deja branche
 
 - le `Bundle` cree les jobs Databricks Bronze, Silver, Quality et Gold
@@ -212,6 +290,14 @@ Le repo peut maintenant etre execute via [databricks.yml](./databricks.yml).
   - les chemins `abfss://...`
   - le catalog Unity Catalog `qualite-eau`
   - les schemas `bronze`, `silver` et `gold`
+- la tache `quality` du job principal est executee comme `notebook_task`, car `great_expectations_validation.py` est un notebook Databricks exporte
+
+Le fichier [databricks.yml](./databricks.yml) est actuellement aligne sur:
+
+- Databricks Runtime `17.3.x-scala2.13`
+- `node_type_id: Standard_D2ads_v6`
+- autoscaling `2 -> 8`
+- un `root_path` workspace sous `/Workspace/Shared/...` pour limiter les problemes de permissions sur `/Workspace/Users/...`
 
 En local, `config.yml` peut rester sur `environment: local`.
 Le mode Azure est force par le Bundle au runtime, sans casser l'execution locale.
@@ -244,6 +330,8 @@ databricks bundle validate -t dev
 databricks bundle deploy -t dev
 ```
 
+Si `bundle deploy` echoue avec une erreur de verrou ou de permissions sur `/Workspace/Users/...`, verifie que le `root_path` pointe bien vers `/Workspace/Shared/...` dans [databricks.yml](./databricks.yml). C'est la configuration actuellement retenue dans ce repo.
+
 Pour lancer le pipeline complet:
 
 ```bash
@@ -269,6 +357,7 @@ Cette workflow:
 - valide le Bundle
 - le deploie sur `push` vers `main`
 - utilise la target `dev`
+- ne lance pas automatiquement le pipeline complet apres le deploiement
 
 Secret GitHub requis:
 
