@@ -1,3 +1,10 @@
+## [1.2.8](https://github.com/Simplon-DE-P1-2025/qualite-eau-data-eng/compare/v1.2.7...v1.2.8) (2026-05-07)
+
+
+### Bug Fixes
+
+* **databricks:** switch azure pipeline to unity catalog table-based io ([7e4be64](https://github.com/Simplon-DE-P1-2025/qualite-eau-data-eng/commit/7e4be64d3b7744be72fdfb63ac9ee8bf3a27a09c))
+
 ## [1.2.7](https://github.com/Simplon-DE-P1-2025/qualite-eau-data-eng/compare/v1.2.6...v1.2.7) (2026-05-07)
 
 
