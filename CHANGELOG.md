@@ -1,3 +1,10 @@
+## [1.2.5](https://github.com/Simplon-DE-P1-2025/qualite-eau-data-eng/compare/v1.2.4...v1.2.5) (2026-05-07)
+
+
+### Bug Fixes
+
+* **databricks:** include shared source modules in bundle sync ([210c528](https://github.com/Simplon-DE-P1-2025/qualite-eau-data-eng/commit/210c52890b88adb9c5b78add9e74404a179d53f1))
+
 ## [1.2.4](https://github.com/Simplon-DE-P1-2025/qualite-eau-data-eng/compare/v1.2.3...v1.2.4) (2026-05-07)
 
 
