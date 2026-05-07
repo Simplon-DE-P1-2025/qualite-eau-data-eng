@@ -71,15 +71,12 @@ def resolve_config_path() -> Path:
     """Résout config.yml en local, en Repo Databricks, ou depuis un notebook."""
     candidates = []
 
-    try:
-        script_path = Path(__file__).resolve()
-        project_root = script_path.parents[2]
+    search_roots = [PROJECT_ROOT] + list(PROJECT_ROOT.parents)
+    for root in search_roots:
         candidates.extend([
-            project_root / "config" / "config.yml",
-            project_root / "config.yml",
+            root / "config" / "config.yml",
+            root / "config.yml",
         ])
-    except NameError:
-        pass
 
     cwd = Path.cwd().resolve()
     candidates.extend([
@@ -87,6 +84,8 @@ def resolve_config_path() -> Path:
         cwd / "config.yml",
         cwd.parent / "config" / "config.yml",
         cwd.parent / "config.yml",
+        cwd.parent.parent / "config" / "config.yml",
+        cwd.parent.parent / "config.yml",
     ])
 
     if "dbutils" in globals():
@@ -102,6 +101,8 @@ def resolve_config_path() -> Path:
             candidates.extend([
                 workspace_dir.parent / "config" / "config.yml",
                 workspace_dir.parent / "config.yml",
+                workspace_dir.parent.parent / "config" / "config.yml",
+                workspace_dir.parent.parent / "config.yml",
             ])
         except Exception:
             pass
