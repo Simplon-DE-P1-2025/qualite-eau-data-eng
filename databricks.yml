@@ -1,6 +1,12 @@
 bundle:
   name: qualite-eau-data-eng
 
+sync:
+  include:
+    - src/**/*.py
+    - config/**/*.yml
+    - notebooks/**/*.py
+
 variables:
   cluster_spark_version:
     description: Databricks Runtime version for job clusters.
