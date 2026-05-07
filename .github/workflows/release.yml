@@ -16,7 +16,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0    # ⚠️ obligatoire — semantic-release lit tout l'historique git
+          fetch-depth: 0    # semantic-release lit tout l'historique git
 
       - uses: actions/setup-node@v4
         with:

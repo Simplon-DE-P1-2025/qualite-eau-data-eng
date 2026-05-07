@@ -8,6 +8,14 @@ import yaml
 from pyspark.sql import SparkSession
 from pyspark.sql import Window
 from pyspark.sql import functions as F
+
+try:
+    PROJECT_ROOT = Path(__file__).resolve().parents[2]
+    if str(PROJECT_ROOT) not in sys.path:
+        sys.path.insert(0, str(PROJECT_ROOT))
+except NameError:
+    PROJECT_ROOT = Path.cwd().resolve()
+
 from src.transformations import gold as gold_tf
 
 try:

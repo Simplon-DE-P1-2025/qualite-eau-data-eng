@@ -14,6 +14,7 @@ import yaml
 
 STAGE_ORDER = ["bronze", "silver", "gold"]
 OPTIONAL_STAGE_ORDER = ["quality"]
+BRONZE_API_CHOICES = ["all", "geo_communes", "hubeau_communes", "hubeau_resultats"]
 
 
 def resolve_project_root() -> Path:
@@ -96,13 +97,16 @@ def run_stage(
     run_dir: Path,
     python_executable: str,
     dry_run: bool,
+    extra_args: list[str] | None = None,
 ) -> dict:
     started_at = dt.datetime.utcnow()
     log_path = run_dir / f"{stage_name}.log"
+    extra_args = extra_args or []
 
     stage_result = {
         "stage": stage_name,
         "script": str(stage_script),
+        "command": [python_executable, "-u", str(stage_script), *extra_args],
         "started_at_utc": started_at.strftime("%Y-%m-%d %H:%M:%S"),
         "status": "pending",
         "return_code": None,
@@ -125,7 +129,7 @@ def run_stage(
         log_stream.flush()
 
         process = subprocess.Popen(
-            [python_executable, "-u", str(stage_script)],
+            [python_executable, "-u", str(stage_script), *extra_args],
             cwd=str(PROJECT_ROOT),
             stdout=subprocess.PIPE,
             stderr=subprocess.STDOUT,
@@ -214,11 +218,25 @@ def parse_args() -> argparse.Namespace:
         action="store_true",
         help="Affiche la sequence sans executer les scripts.",
     )
+    parser.add_argument(
+        "--bronze-api",
+        choices=BRONZE_API_CHOICES,
+        default="all",
+        help="Sous-mode Bronze: limite l'ingestion a une API specifique.",
+    )
     return parser.parse_args()
+
+
+def build_stage_args(args: argparse.Namespace) -> dict[str, list[str]]:
+    stage_args: dict[str, list[str]] = {}
+    if args.bronze_api != "all":
+        stage_args["bronze"] = ["--api", args.bronze_api]
+    return stage_args
 
 
 def main() -> int:
     args = parse_args()
+    stage_args = build_stage_args(args)
     logs_root = resolve_logs_root() / "orchestration"
     run_ts = dt.datetime.utcnow().strftime("%Y%m%d_%H%M%S")
     run_dir = logs_root / run_ts
@@ -235,6 +253,8 @@ def main() -> int:
     print("=" * 72)
     print(f"Environment : {cfg['environment']}")
     print(f"Sequence    : {' -> '.join(stages_to_run)}")
+    if args.bronze_api != "all":
+        print(f"Bronze API  : {args.bronze_api}")
     print(f"Logs        : {run_dir}")
     if args.dry_run:
         print("Mode        : dry-run")
@@ -245,13 +265,16 @@ def main() -> int:
 
     for stage_name in stages_to_run:
         stage_script = STAGE_PATHS[stage_name]
-        print(f"\n[{stage_name.upper()}] {stage_script}")
+        stage_cli_args = stage_args.get(stage_name, [])
+        suffix = f" {' '.join(stage_cli_args)}" if stage_cli_args else ""
+        print(f"\n[{stage_name.upper()}] {stage_script}{suffix}")
         result = run_stage(
             stage_name=stage_name,
             stage_script=stage_script,
             run_dir=run_dir,
             python_executable=sys.executable,
             dry_run=args.dry_run,
+            extra_args=stage_cli_args,
         )
         stage_results.append(result)
 

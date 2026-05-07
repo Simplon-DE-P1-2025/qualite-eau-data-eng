@@ -209,11 +209,11 @@ apis:
       codePostal:      null         # Ex: "64000"
       nom:             null        # Filtre par défaut
       code:            null         # Ex: "64445"
-      codeDepartement: 64        # Aligne les communes geo avec les resultats Hubeau charges sur le Rhone
+      codeDepartement: null        # Le chargement se fait par boucle sur /departements/{code}/communes
       codeRegion:      null         # Ex: "75"
       geometry:        "centre"     # "centre" | "contour" | "bbox"
       format:          "geojson"
-      fields:          "nom,code,codeDepartement,codeRegion,siren,codeEpci,codesPostaux,population,centre"
+      fields:          "nom,code,codeDepartement,codeRegion,siren,codeEpci,codesPostaux,population"
     pagination:
       enabled:   false
       page_size: 1000

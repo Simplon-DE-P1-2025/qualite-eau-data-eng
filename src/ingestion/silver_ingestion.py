@@ -30,6 +30,14 @@ import pyarrow.parquet as pq
 from pyspark.sql import SparkSession
 from pyspark.sql import functions as F, Window
 from pyspark.sql import types as T
+
+try:
+    PROJECT_ROOT = Path(__file__).resolve().parents[2]
+    if str(PROJECT_ROOT) not in sys.path:
+        sys.path.insert(0, str(PROJECT_ROOT))
+except NameError:
+    PROJECT_ROOT = Path.cwd().resolve()
+
 from src.transformations import silver as silver_tf
 
 try:

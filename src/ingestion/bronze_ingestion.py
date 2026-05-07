@@ -23,6 +23,7 @@
 # COMMAND ----------
 
 import atexit
+import argparse
 import datetime
 import json
 import re
@@ -38,12 +39,41 @@ from pyspark.sql import SparkSession
 from pyspark.sql import functions as F, types as T
 
 try:
+    PROJECT_ROOT = Path(__file__).resolve().parents[2]
+    if str(PROJECT_ROOT) not in sys.path:
+        sys.path.insert(0, str(PROJECT_ROOT))
+except NameError:
+    PROJECT_ROOT = Path.cwd().resolve()
+
+from src.transformations import bronze_geo as bronze_geo_tf
+
+try:
     sys.stdout.reconfigure(encoding="utf-8")
     sys.stderr.reconfigure(encoding="utf-8")
 except AttributeError:
     pass
 
 TEMP_DIRS_TO_CLEAN: list[Path] = []
+SUPPORTED_APIS = ("all", "geo_communes", "hubeau_communes", "hubeau_resultats")
+
+
+def parse_runtime_args(argv: list[str]) -> argparse.Namespace:
+    parser = argparse.ArgumentParser(add_help=True)
+    parser.add_argument(
+        "--api",
+        choices=SUPPORTED_APIS,
+        default="all",
+        help="Exécute une seule API Bronze ou 'all' pour le run complet.",
+    )
+    args, _ = parser.parse_known_args(argv)
+    return args
+
+
+RUNTIME_ARGS = parse_runtime_args(sys.argv[1:])
+
+
+def should_run_api(api_key: str) -> bool:
+    return RUNTIME_ARGS.api in ("all", api_key)
 # ------------------------------------------------------------------
 # âš™ï¸  Seul paramÃ¨tre en dur : le chemin vers le fichier de config
 # ------------------------------------------------------------------
@@ -307,6 +337,86 @@ def _get(url: str, params: dict) -> dict:
                 raise
 
 
+def _fetch_geo_departments(api_url: str, params: dict) -> list[str]:
+    region_codes = bronze_geo_tf.normalize_code_list(params.get("codeRegion"))
+    if region_codes:
+        codes: list[str] = []
+        for region_code in region_codes:
+            region_url = bronze_geo_tf.build_region_departements_url(api_url, region_code)
+            raw = _get(region_url, {})
+            if isinstance(raw, list):
+                for item in raw:
+                    if isinstance(item, dict):
+                        codes.extend(bronze_geo_tf.normalize_code_list(item.get("code")))
+        return sorted(set(codes))
+
+    departements_url = bronze_geo_tf.build_departements_url(api_url)
+    raw = _get(departements_url, {})
+    if not isinstance(raw, list):
+        return []
+    codes: list[str] = []
+    for item in raw:
+        if isinstance(item, dict):
+            codes.extend(bronze_geo_tf.normalize_code_list(item.get("code")))
+    return sorted(set(codes))
+
+
+def fetch_geo_communes(api_cfg: dict, extra: Optional[dict] = None) -> list[dict]:
+    url = api_cfg["url"]
+    nested = api_cfg.get("nested_fields", {})
+    params = _clean_params(api_cfg["params"].copy())
+
+    if extra:
+        params.update({k: v for k, v in extra.items() if v is not None})
+
+    validate_api_scope("geo_communes", params, api_cfg["pagination"])
+
+    request_params = bronze_geo_tf.strip_geo_request_params(params)
+    direct_scope_keys = ["codePostal", "nom", "code"]
+    has_direct_scope = any(params.get(key) not in (None, "") for key in direct_scope_keys)
+    department_codes = bronze_geo_tf.normalize_code_list(params.get("codeDepartement"))
+    if not department_codes and not has_direct_scope:
+        department_codes = _fetch_geo_departments(url, params)
+
+    if not department_codes:
+        print(f"\n📡 [geo_communes] {url}")
+        print(f"   Params actifs : {request_params}")
+        raw = _get(url, request_params)
+        if isinstance(raw, dict) and "features" in raw:
+            records = bronze_geo_tf.extract_geojson_records(raw, nested)
+        elif isinstance(raw, list):
+            records = bronze_geo_tf.serialize_nested_fields(raw, nested)
+        else:
+            records = []
+        print(f"✅ [geo_communes] {len(records):,} enregistrements récupérés\n")
+        return records
+
+    all_records: list[dict] = []
+    print("\n📡 [geo_communes] chargement par département")
+    print(f"   Départements ciblés : {', '.join(department_codes)}")
+
+    for department_code in department_codes:
+        department_url = bronze_geo_tf.build_department_communes_url(url, department_code)
+        print(f"   ↳ département {department_code} ...", end="  ")
+        raw = _get(department_url, request_params)
+        records = (
+            bronze_geo_tf.extract_geojson_records(raw, nested)
+            if isinstance(raw, dict) and "features" in raw
+            else []
+        )
+        all_records.extend(records)
+        print(f"{len(records):>5} communes  (cumulé {len(all_records):,})")
+
+    deduped_records = {
+        record.get("code"): record
+        for record in all_records
+        if record.get("code") is not None
+    }
+    final_records = list(deduped_records.values()) if deduped_records else all_records
+    print(f"✅ [geo_communes] {len(final_records):,} enregistrements récupérés\n")
+    return final_records
+
+
 def fetch_all(api_key: str, extra: Optional[dict] = None) -> list[dict]:
     """
     RÃ©cupÃ¨re toutes les pages d'une API dÃ©clarÃ©e dans config.yml.
@@ -320,6 +430,9 @@ def fetch_all(api_key: str, extra: Optional[dict] = None) -> list[dict]:
     en JSON string pour Ãªtre stockÃ©s dans Delta Lake.
     """
     api_cfg      = cfg["apis"][api_key]
+    if api_key == "geo_communes":
+        return fetch_geo_communes(api_cfg, extra=extra)
+
     url          = api_cfg["url"]
     pag          = api_cfg["pagination"]
     nested       = api_cfg.get("nested_fields", {})
@@ -482,7 +595,37 @@ else:
 
 # COMMAND ----------
 # MAGIC %md
-# MAGIC ## 5. Ingestion — Communes / UDI
+# MAGIC ## 5. Ingestion — Données géographiques (GeoJSON)
+# MAGIC
+# MAGIC **Schéma attendu** (extrait depuis GeoJSON FeatureCollection) :
+# MAGIC ```
+# MAGIC nom | code | codeDepartement | codeRegion | siren | codeEpci
+# MAGIC population | codesPostaux (JSON string) | longitude | latitude
+# MAGIC ```
+
+# COMMAND ----------
+
+if should_run_api("geo_communes"):
+    records_geo = fetch_all("geo_communes")
+
+    write_bronze(
+        records      = records_geo,
+        table_key    = "bronze_geo",
+        delta_suffix = "geo_communes",
+        api_key      = "geo_communes",
+    )
+
+# COMMAND ----------
+# MAGIC %md ## Aperçu geo
+
+# COMMAND ----------
+
+if should_run_api("geo_communes"):
+    display(read_bronze_dataset("geo_communes"))
+
+# COMMAND ----------
+# MAGIC %md
+# MAGIC ## 6. Ingestion — Communes / UDI
 # MAGIC
 # MAGIC **Schéma attendu** (7 colonnes plates) :
 # MAGIC ```
@@ -491,26 +634,28 @@ else:
 
 # COMMAND ----------
 
-records_communes = fetch_all("hubeau_communes")
+if should_run_api("hubeau_communes"):
+    records_communes = fetch_all("hubeau_communes")
 
-write_bronze(
-    records      = records_communes,
-    table_key    = "bronze_communes",
-    delta_suffix = "communes_udi",
-    api_key      = "hubeau_communes",
-    # Pas de partition : ~22 lignes pour Pau
-)
+    write_bronze(
+        records      = records_communes,
+        table_key    = "bronze_communes",
+        delta_suffix = "communes_udi",
+        api_key      = "hubeau_communes",
+        # Pas de partition : ~22 lignes pour Pau
+    )
 
 # COMMAND ----------
 # MAGIC %md ## Aperçu communes
 
 # COMMAND ----------
 
-display(read_bronze_dataset("communes_udi"))
+if should_run_api("hubeau_communes"):
+    display(read_bronze_dataset("communes_udi"))
 
 # COMMAND ----------
 # MAGIC %md
-# MAGIC ## 6. Ingestion — Résultats des analyses sanitaires
+# MAGIC ## 7. Ingestion — Résultats des analyses sanitaires
 # MAGIC
 # MAGIC **Schéma attendu** (26 colonnes) avec :
 # MAGIC - `date_prelevement` : format ISO 8601 → `2026-02-26T12:55:00Z`
@@ -525,106 +670,81 @@ extra_resultats = {
     # "code_departement":     "64",
 }
 
-records_resultats = fetch_all("hubeau_resultats", extra=extra_resultats)
+if should_run_api("hubeau_resultats"):
+    records_resultats = fetch_all("hubeau_resultats", extra=extra_resultats)
 
-# --- Ajout de la colonne de partition par année ---
-# date_prelevement format : "2026-02-26T12:55:00Z"
-if records_resultats:
-    now = datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")
-    dest = f"{BRONZE_PATH}resultats_dis/"
+    # --- Ajout de la colonne de partition par année ---
+    # date_prelevement format : "2026-02-26T12:55:00Z"
+    if records_resultats:
+        now = datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")
+        dest = f"{BRONZE_PATH}resultats_dis/"
 
-    df_res = (
-        records_to_spark_df(records_resultats)
-        .withColumn("_ingestion_timestamp", F.lit(now).cast("timestamp"))
-        .withColumn("_source_api", F.lit(cfg["apis"]["hubeau_resultats"]["url"]))
-        .withColumn(
-            "_partition_annee",
-            F.year(F.to_timestamp(F.col("date_prelevement"), "yyyy-MM-dd'T'HH:mm:ss'Z'"))
+        df_res = (
+            records_to_spark_df(records_resultats)
+            .withColumn("_ingestion_timestamp", F.lit(now).cast("timestamp"))
+            .withColumn("_source_api", F.lit(cfg["apis"]["hubeau_resultats"]["url"]))
+            .withColumn(
+                "_partition_annee",
+                F.year(F.to_timestamp(F.col("date_prelevement"), "yyyy-MM-dd'T'HH:mm:ss'Z'"))
+            )
         )
-    )
 
-    if env == "local":
-        # Limite le nombre de writers Parquet simultanés sur une machine locale.
-        df_res = df_res.coalesce(1)
+        if env == "local":
+            # Limite le nombre de writers Parquet simultanés sur une machine locale.
+            df_res = df_res.coalesce(1)
 
-    (
-        df_res.write
-        .format(STORAGE_FORMAT)
-        .mode(cfg["ingestion"]["write_mode"])
-        .option("overwriteSchema", str(cfg["ingestion"]["overwrite_schema"]).lower())
-        .partitionBy("_partition_annee")
-        .save(dest)
-    )
+        (
+            df_res.write
+            .format(STORAGE_FORMAT)
+            .mode(cfg["ingestion"]["write_mode"])
+            .option("overwriteSchema", str(cfg["ingestion"]["overwrite_schema"]).lower())
+            .partitionBy("_partition_annee")
+            .save(dest)
+        )
 
-    if env != "local":
-        spark.sql(f"""
-            CREATE TABLE IF NOT EXISTS {DB}.{TBL['bronze_resultats']}
-            USING DELTA LOCATION '{dest}'
-        """)
+        if env != "local":
+            spark.sql(f"""
+                CREATE TABLE IF NOT EXISTS {DB}.{TBL['bronze_resultats']}
+                USING DELTA LOCATION '{dest}'
+            """)
 
-    n = spark.read.format(STORAGE_FORMAT).load(dest).count()
-    target_name = f"{DB}.{TBL['bronze_resultats']}" if env != "local" else TBL["bronze_resultats"]
-    print(f"✅ {target_name} → {n:,} lignes (partitionné par année)")
-else:
-    print("⚠️  Aucune donnée retournée par hubeau_resultats")
+        n = spark.read.format(STORAGE_FORMAT).load(dest).count()
+        target_name = f"{DB}.{TBL['bronze_resultats']}" if env != "local" else TBL["bronze_resultats"]
+        print(f"✅ {target_name} → {n:,} lignes (partitionné par année)")
+    else:
+        print("⚠️  Aucune donnée retournée par hubeau_resultats")
 
 # COMMAND ----------
 # MAGIC %md ## Aperçu résultats — colonnes clés
 
 # COMMAND ----------
 
-display(
-    read_bronze_dataset("resultats_dis")
-    .select(
-        "date_prelevement", "_partition_annee",
-        "code_commune", "nom_commune",
-        "libelle_parametre", "resultat_alphanumerique", "resultat_numerique", "libelle_unite",
-        "limite_qualite_parametre",
-        "conformite_limites_bact_prelevement", "conformite_limites_pc_prelevement",
-        "reseaux", "_source_api"
+if should_run_api("hubeau_resultats"):
+    display(
+        read_bronze_dataset("resultats_dis")
+        .select(
+            "date_prelevement", "_partition_annee",
+            "code_commune", "nom_commune",
+            "libelle_parametre", "resultat_alphanumerique", "resultat_numerique", "libelle_unite",
+            "limite_qualite_parametre",
+            "conformite_limites_bact_prelevement", "conformite_limites_pc_prelevement",
+            "reseaux", "_source_api"
+        )
+        .limit(10)
     )
-    .limit(10)
-)
 
 # COMMAND ----------
 # MAGIC %md ## Distribution par année
 
 # COMMAND ----------
 
-display(
-    read_bronze_dataset("resultats_dis")
-    .groupBy("_partition_annee")
-    .count()
-    .orderBy("_partition_annee")
-)
-
-# COMMAND ----------
-# MAGIC %md
-# MAGIC ## 7. Ingestion — Données géographiques (GeoJSON)
-# MAGIC
-# MAGIC **Schéma attendu** (extrait depuis GeoJSON FeatureCollection) :
-# MAGIC ```
-# MAGIC nom | code | codeDepartement | codeRegion | siren | codeEpci
-# MAGIC population | codesPostaux (JSON string) | longitude | latitude
-# MAGIC ```
-
-# COMMAND ----------
-
-records_geo = fetch_all("geo_communes")
-
-write_bronze(
-    records      = records_geo,
-    table_key    = "bronze_geo",
-    delta_suffix = "geo_communes",
-    api_key      = "geo_communes",
-)
-
-# COMMAND ----------
-# MAGIC %md ## Aperçu geo
-
-# COMMAND ----------
-
-display(read_bronze_dataset("geo_communes"))
+if should_run_api("hubeau_resultats"):
+    display(
+        read_bronze_dataset("resultats_dis")
+        .groupBy("_partition_annee")
+        .count()
+        .orderBy("_partition_annee")
+    )
 
 # COMMAND ----------
 # MAGIC %md ## 8. Rapport d'ingestion Bronze
@@ -641,9 +761,14 @@ print(f"  {'Table':<38} {'Lignes':>10}  {'API'}")
 print("-" * 70)
 
 tables_check = [
+    (TBL["bronze_geo"],       f"{BRONZE_PATH}geo_communes/", "geo_communes"),
     (TBL["bronze_communes"],  f"{BRONZE_PATH}communes_udi/", "hubeau_communes"),
     (TBL["bronze_resultats"], f"{BRONZE_PATH}resultats_dis/", "hubeau_resultats"),
-    (TBL["bronze_geo"],       f"{BRONZE_PATH}geo_communes/", "geo_communes"),
+]
+tables_check = [
+    (tbl_name, path, api_key)
+    for tbl_name, path, api_key in tables_check
+    if should_run_api(api_key)
 ]
 
 total = 0
