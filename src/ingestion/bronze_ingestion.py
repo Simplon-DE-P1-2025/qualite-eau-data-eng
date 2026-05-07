@@ -38,12 +38,30 @@ from typing import Optional
 from pyspark.sql import SparkSession
 from pyspark.sql import functions as F, types as T
 
-try:
-    PROJECT_ROOT = Path(__file__).resolve().parents[2]
-    if str(PROJECT_ROOT) not in sys.path:
-        sys.path.insert(0, str(PROJECT_ROOT))
-except NameError:
-    PROJECT_ROOT = Path.cwd().resolve()
+def resolve_project_root_for_imports() -> Path:
+    candidates = []
+
+    try:
+        candidates.append(Path(__file__).resolve())
+    except NameError:
+        pass
+
+    candidates.append(Path.cwd().resolve())
+
+    for candidate in candidates:
+        search_roots = [candidate] + list(candidate.parents)
+        for root in search_roots:
+            if (root / "src").is_dir() and (
+                (root / "config" / "config.yml").exists() or (root / "config.yml").exists()
+            ):
+                return root
+
+    return Path.cwd().resolve()
+
+
+PROJECT_ROOT = resolve_project_root_for_imports()
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
 
 from src.transformations import bronze_geo as bronze_geo_tf
 from src.runtime_env import (

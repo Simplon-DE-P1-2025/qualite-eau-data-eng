@@ -42,12 +42,30 @@ try:
 except AttributeError:
     pass
 
-try:
-    project_root = Path(__file__).resolve().parents[2]
-    if str(project_root) not in sys.path:
-        sys.path.insert(0, str(project_root))
-except NameError:
-    pass
+def resolve_project_root_for_imports() -> Path | None:
+    candidates = []
+
+    try:
+        candidates.append(Path(__file__).resolve())
+    except NameError:
+        pass
+
+    candidates.append(Path.cwd().resolve())
+
+    for candidate in candidates:
+        search_roots = [candidate] + list(candidate.parents)
+        for root in search_roots:
+            if (root / "src").is_dir() and (
+                (root / "config" / "config.yml").exists() or (root / "config.yml").exists()
+            ):
+                return root
+
+    return None
+
+
+project_root_for_imports = resolve_project_root_for_imports()
+if project_root_for_imports and str(project_root_for_imports) not in sys.path:
+    sys.path.insert(0, str(project_root_for_imports))
 
 from src.runtime_env import resolve_runtime_environment
 
