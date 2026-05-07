@@ -20,7 +20,7 @@ targets:
     default: true
     workspace:
       host: https://adb-7405617780839522.2.azuredatabricks.net
-      root_path: /Workspace/Shared/bundles/${bundle.name}/${bundle.target}
+      root_path: /Workspace/db-deploy/bundles/${bundle.name}/${bundle.target}
 
 resources:
   jobs:
