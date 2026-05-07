@@ -232,6 +232,11 @@ else:
 
 NAMESPACE = build_namespace_config(cfg, "bronze")
 TBL = cfg["database"]   # raccourci pour accÃ©der aux noms de tables
+BRONZE_SUFFIX_TO_TABLE_KEY = {
+    "geo_communes": "bronze_geo",
+    "communes_udi": "bronze_communes",
+    "resultats_dis": "bronze_resultats",
+}
 
 print(f"âœ… Config chargÃ©e | env={env}")
 print(f"   BRONZE : {BRONZE_PATH}")
@@ -304,6 +309,9 @@ def records_to_spark_df(records: list[dict]):
 
 def read_bronze_dataset(delta_suffix: str):
     """Lecture par chemin, compatible local et Databricks."""
+    if env == "azure":
+        table_key = BRONZE_SUFFIX_TO_TABLE_KEY[delta_suffix]
+        return spark.table(NAMESPACE.fq_table(TBL[table_key]))
     return spark.read.format(STORAGE_FORMAT).load(f"{BRONZE_PATH}{delta_suffix}/")
 
 
@@ -628,16 +636,24 @@ def write_bronze(records: list, table_key: str, delta_suffix: str,
         writer = writer.partitionBy(partition_col)
         print(f"   Partitionnement activÃ© sur '{partition_col}'")
 
+    table_ref = NAMESPACE.fq_table(table_name)
+
+    if env == "azure":
+        writer.saveAsTable(table_ref)
+        n = spark.table(table_ref).count()
+        print(f"âœ… {table_ref} â†’ {n:,} lignes  [managed table]")
+        return n
+
     writer.save(dest)
 
     if env != "local":
         spark.sql(f"""
-            CREATE TABLE IF NOT EXISTS {NAMESPACE.fq_table(table_name)}
+            CREATE TABLE IF NOT EXISTS {table_ref}
             USING DELTA LOCATION '{dest}'
         """)
 
     n = spark.read.format(STORAGE_FORMAT).load(dest).count()
-    target_name = NAMESPACE.fq_table(table_name) if env != "local" else table_name
+    target_name = table_ref if env != "local" else table_name
     print(f"âœ… {target_name} â†’ {n:,} lignes  [{dest}]")
     return n
 
@@ -755,28 +771,31 @@ if should_run_api("hubeau_resultats"):
             # Limite le nombre de writers Parquet simultanés sur une machine locale.
             df_res = df_res.coalesce(1)
 
-        (
+        writer = (
             df_res.write
             .format(STORAGE_FORMAT)
             .mode(cfg["ingestion"]["write_mode"])
             .option("overwriteSchema", str(cfg["ingestion"]["overwrite_schema"]).lower())
             .partitionBy("_partition_annee")
-            .save(dest)
         )
 
-        if env != "local":
-            spark.sql(f"""
-                CREATE TABLE IF NOT EXISTS {NAMESPACE.fq_table(TBL['bronze_resultats'])}
-                USING DELTA LOCATION '{dest}'
-            """)
+        table_ref = NAMESPACE.fq_table(TBL["bronze_resultats"])
+        if env == "azure":
+            writer.saveAsTable(table_ref)
+            n = spark.table(table_ref).count()
+            print(f"✅ {table_ref} → {n:,} lignes (partitionné par année, managed table)")
+        else:
+            writer.save(dest)
 
-        n = spark.read.format(STORAGE_FORMAT).load(dest).count()
-        target_name = (
-            NAMESPACE.fq_table(TBL["bronze_resultats"])
-            if env != "local"
-            else TBL["bronze_resultats"]
-        )
-        print(f"✅ {target_name} → {n:,} lignes (partitionné par année)")
+            if env != "local":
+                spark.sql(f"""
+                    CREATE TABLE IF NOT EXISTS {table_ref}
+                    USING DELTA LOCATION '{dest}'
+                """)
+
+            n = spark.read.format(STORAGE_FORMAT).load(dest).count()
+            target_name = table_ref if env != "local" else TBL["bronze_resultats"]
+            print(f"✅ {target_name} → {n:,} lignes (partitionné par année)")
     else:
         print("⚠️  Aucune donnée retournée par hubeau_resultats")
 
@@ -840,7 +859,10 @@ tables_check = [
 total = 0
 for tbl_name, path, api_key in tables_check:
     try:
-        n = spark.read.format(STORAGE_FORMAT).load(path).count()
+        if env == "azure":
+            n = spark.table(NAMESPACE.fq_table(tbl_name)).count()
+        else:
+            n = spark.read.format(STORAGE_FORMAT).load(path).count()
         total += n
         src = cfg["apis"][api_key]["url"].split("/")[-1]
         print(f"  ✅  {tbl_name:<38} {n:>10,}  /{src}")

@@ -203,8 +203,19 @@ elif env == "azure":
 else:
     raise ValueError(f"Environnement inconnu dans config.yml : {env}")
 
+BRONZE_NAMESPACE = build_namespace_config(cfg, "bronze")
 NAMESPACE = build_namespace_config(cfg, "silver")
 TBL = cfg["database"]
+BRONZE_SUFFIX_TO_TABLE_KEY = {
+    "resultats_dis": "bronze_resultats",
+    "communes_udi": "bronze_communes",
+    "geo_communes": "bronze_geo",
+}
+SILVER_SUFFIX_TO_TABLE_KEY = {
+    "stations": "silver_stations",
+    "mesures": "silver_mesures",
+    "conformite": "silver_conformite",
+}
 LOCAL_RUN_ID = datetime.datetime.utcnow().strftime("%Y%m%d_%H%M%S")
 LOCAL_OUTPUT_PATHS: dict[str, str] = {}
 LOCAL_OUTPUT_MANIFEST_PATH = (
@@ -264,6 +275,13 @@ def ensure_local_output_base(path_value: str, fallback_name: str) -> str:
 def read_dataset(base_path: str, suffix: str):
     if env == "local" and base_path == SILVER_PATH and suffix in LOCAL_OUTPUT_PATHS:
         return spark.read.format(STORAGE_FORMAT).load(LOCAL_OUTPUT_PATHS[suffix])
+    if env == "azure":
+        if base_path == BRONZE_PATH:
+            table_key = BRONZE_SUFFIX_TO_TABLE_KEY[suffix]
+            return spark.table(BRONZE_NAMESPACE.fq_table(TBL[table_key]))
+        if base_path == SILVER_PATH:
+            table_key = SILVER_SUFFIX_TO_TABLE_KEY[suffix]
+            return spark.table(NAMESPACE.fq_table(TBL[table_key]))
     return spark.read.format(STORAGE_FORMAT).load(f"{base_path}{suffix}/")
 
 
@@ -359,7 +377,7 @@ def _write_local_parquet_dataset(df, dest: str, partition_cols: list[str]) -> No
         pq.write_table(table, folder / "part-00000.parquet")
 
 
-def write_dataset(df, suffix: str, partition_cols=None):
+def write_dataset(df, suffix: str, partition_cols=None, table_key: str | None = None):
     partition_cols = partition_cols or []
     if env == "local":
         dest = _resolve_local_write_dest(suffix)
@@ -367,6 +385,21 @@ def write_dataset(df, suffix: str, partition_cols=None):
         LOCAL_OUTPUT_PATHS[suffix] = dest
         persist_local_output_manifest()
         return dest
+
+    if env == "azure":
+        if not table_key:
+            raise ValueError(f"table_key obligatoire pour Azure (suffix={suffix})")
+        table_ref = NAMESPACE.fq_table(TBL[table_key])
+        writer = (
+            df.write
+            .format(STORAGE_FORMAT)
+            .mode("overwrite")
+            .option("overwriteSchema", "true")
+        )
+        if partition_cols:
+            writer = writer.partitionBy(*partition_cols)
+        writer.saveAsTable(table_ref)
+        return table_ref
 
     dest = f"{SILVER_PATH}{suffix}/"
 
@@ -717,8 +750,8 @@ df_geo_clean = silver_tf.build_geo_clean(df_bronze_geo)
 # --- Stations : depuis communes_udi + enrichissement gÃ©o ---
 df_stations = silver_tf.build_stations(df_bronze_communes, df_geo_clean)
 
-dest_stations = write_dataset(df_stations, "stations")
-if env != "local":
+dest_stations = write_dataset(df_stations, "stations", table_key="silver_stations")
+if env not in ("local", "azure"):
     spark.sql(
         f"CREATE TABLE IF NOT EXISTS {NAMESPACE.fq_table(TBL['silver_stations'])} "
         f"USING DELTA LOCATION '{dest_stations}'"
@@ -736,8 +769,8 @@ print(f"âœ… silver.stations         : {n_stations:,} lignes â†’ {dest_s
 # Colonnes de la table mesures
 df_mesures = silver_tf.build_mesures(df_cat)
 
-dest_mesures = write_dataset(df_mesures, "mesures", ["annee_prelevement", "code_departement"])
-if env != "local":
+dest_mesures = write_dataset(df_mesures, "mesures", ["annee_prelevement", "code_departement"], table_key="silver_mesures")
+if env not in ("local", "azure"):
     spark.sql(
         f"CREATE TABLE IF NOT EXISTS {NAMESPACE.fq_table(TBL['silver_mesures'])} "
         f"USING DELTA LOCATION '{dest_mesures}'"
@@ -754,8 +787,8 @@ print(f"âœ… silver.mesures          : {n_mesures:,} lignes â†’ {dest_me
 
 df_conformite = silver_tf.build_conformite(df_cat)
 
-dest_conformite = write_dataset(df_conformite, "conformite", ["annee_prelevement", "code_departement"])
-if env != "local":
+dest_conformite = write_dataset(df_conformite, "conformite", ["annee_prelevement", "code_departement"], table_key="silver_conformite")
+if env not in ("local", "azure"):
     spark.sql(
         f"CREATE TABLE IF NOT EXISTS {NAMESPACE.fq_table(TBL['silver_conformite'])} "
         f"USING DELTA LOCATION '{dest_conformite}'"
@@ -827,6 +860,8 @@ for tbl_name, path in tables_silver:
         if env == "local":
             dataset_name = Path(path.rstrip("/\\")).name
             n = read_dataset(SILVER_PATH, dataset_name).count()
+        elif env == "azure":
+            n = spark.table(path).count()
         else:
             n = spark.read.format(STORAGE_FORMAT).load(path).count()
         total += n

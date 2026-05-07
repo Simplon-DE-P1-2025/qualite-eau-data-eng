@@ -179,8 +179,21 @@ elif env == "azure":
 else:
     raise ValueError(f"Environnement inconnu dans config.yml : {env}")
 
+SILVER_NAMESPACE = build_namespace_config(cfg, "silver")
 NAMESPACE = build_namespace_config(cfg, "gold")
 TBL = cfg["database"]
+SILVER_SUFFIX_TO_TABLE_KEY = {
+    "stations": "silver_stations",
+    "mesures": "silver_mesures",
+    "conformite": "silver_conformite",
+}
+GOLD_SUFFIX_TO_TABLE_KEY = {
+    "conformite_commune": "gold_conformite_commune",
+    "evolution_parametres": "gold_evolution_parametres",
+    "qualite_region": "gold_qualite_region",
+    "top10_communes": "gold_top10_communes",
+    "non_conformites": "gold_non_conformites",
+}
 LOCAL_SILVER_MANIFEST_PATH = (
     (PROJECT_ROOT / "logs" / "silver_local_latest.json")
     if env == "local"
@@ -235,11 +248,31 @@ def ensure_local_output_base(path_value: str, fallback_name: str) -> str:
 def read_dataset(base_path: str, suffix: str):
     if env == "local" and base_path == SILVER_PATH and suffix in LOCAL_SILVER_OUTPUTS:
         return spark.read.format(STORAGE_FORMAT).load(LOCAL_SILVER_OUTPUTS[suffix])
+    if env == "azure":
+        if base_path == SILVER_PATH:
+            return spark.table(SILVER_NAMESPACE.fq_table(TBL[SILVER_SUFFIX_TO_TABLE_KEY[suffix]]))
+        if base_path == GOLD_PATH:
+            return spark.table(NAMESPACE.fq_table(TBL[GOLD_SUFFIX_TO_TABLE_KEY[suffix]]))
     return spark.read.format(STORAGE_FORMAT).load(f"{base_path}{suffix}/")
 
 
-def write_dataset(df, suffix: str, partition_cols=None):
+def write_dataset(df, suffix: str, partition_cols=None, table_key: str | None = None):
     partition_cols = partition_cols or []
+    if env == "azure":
+        if not table_key:
+            raise ValueError(f"table_key obligatoire pour Azure (suffix={suffix})")
+        table_ref = NAMESPACE.fq_table(TBL[table_key])
+        writer = (
+            df.write
+            .format(STORAGE_FORMAT)
+            .mode("overwrite")
+            .option("overwriteSchema", "true")
+        )
+        if partition_cols:
+            writer = writer.partitionBy(*partition_cols)
+        writer.saveAsTable(table_ref)
+        return table_ref
+
     dest = f"{GOLD_PATH}{suffix}/"
     if env == "local":
         dest_path = Path(dest)
@@ -259,6 +292,8 @@ def write_dataset(df, suffix: str, partition_cols=None):
 
 
 def create_table_if_needed(table_key: str, dest: str) -> None:
+    if env == "azure":
+        return
     if env != "local":
         spark.sql(
             f"CREATE TABLE IF NOT EXISTS {NAMESPACE.fq_table(TBL[table_key])} "
@@ -316,6 +351,7 @@ dest_conformite_commune = write_dataset(
     df_gold_conformite_commune,
     "conformite_commune",
     ["annee_prelevement", "code_departement"],
+    table_key="gold_conformite_commune",
 )
 create_table_if_needed("gold_conformite_commune", dest_conformite_commune)
 print(f"✅ gold.conformite_commune   : {df_gold_conformite_commune.count():,} lignes → {dest_conformite_commune}")
@@ -333,6 +369,7 @@ dest_evolution_parametres = write_dataset(
     df_gold_evolution_parametres,
     "evolution_parametres",
     ["annee_prelevement", "code_departement"],
+    table_key="gold_evolution_parametres",
 )
 create_table_if_needed("gold_evolution_parametres", dest_evolution_parametres)
 print(f"✅ gold.evolution_parametres : {df_gold_evolution_parametres.count():,} lignes → {dest_evolution_parametres}")
@@ -351,6 +388,7 @@ dest_qualite_region = write_dataset(
     df_gold_qualite_region,
     "qualite_region",
     ["annee_prelevement"],
+    table_key="gold_qualite_region",
 )
 create_table_if_needed("gold_qualite_region", dest_qualite_region)
 print(f"✅ gold.qualite_region       : {df_gold_qualite_region.count():,} lignes → {dest_qualite_region}")
@@ -362,7 +400,7 @@ print(f"✅ gold.qualite_region       : {df_gold_qualite_region.count():,} ligne
 df_score_communes = gold_tf.build_score_communes(df_gold_conformite_commune)
 df_gold_top10_communes = gold_tf.build_top10_communes(df_score_communes)
 
-dest_top10_communes = write_dataset(df_gold_top10_communes, "top10_communes")
+dest_top10_communes = write_dataset(df_gold_top10_communes, "top10_communes", table_key="gold_top10_communes")
 create_table_if_needed("gold_top10_communes", dest_top10_communes)
 print(f"✅ gold.top10_communes       : {df_gold_top10_communes.count():,} lignes → {dest_top10_communes}")
 
@@ -381,6 +419,7 @@ dest_non_conformites = write_dataset(
     df_gold_non_conformites,
     "non_conformites",
     ["annee_prelevement", "code_departement"],
+    table_key="gold_non_conformites",
 )
 create_table_if_needed("gold_non_conformites", dest_non_conformites)
 print(f"✅ gold.non_conformites      : {df_gold_non_conformites.count():,} lignes → {dest_non_conformites}")
@@ -406,7 +445,10 @@ print("-" * 70)
 total = 0
 for tbl_name, path in gold_tables:
     try:
-        n = read_dataset(GOLD_PATH, Path(path.rstrip("/\\")).name).count()
+        if env == "azure":
+            n = spark.table(path).count()
+        else:
+            n = read_dataset(GOLD_PATH, Path(path.rstrip("/\\")).name).count()
         total += n
         print(f"  ✅  {tbl_name:<38} {n:>12,}")
     except Exception as e:

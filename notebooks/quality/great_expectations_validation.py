@@ -92,7 +92,7 @@ def load_module_from_path(module_name: str, file_path: Path):
     return module
 
 try:
-    from src.runtime_env import resolve_runtime_environment
+    from src.runtime_env import build_namespace_config, resolve_runtime_environment
 except ModuleNotFoundError:
     if src_dir_for_imports is None:
         raise
@@ -100,6 +100,7 @@ except ModuleNotFoundError:
         "runtime_env_fallback",
         src_dir_for_imports / "runtime_env.py",
     )
+    build_namespace_config = runtime_env.build_namespace_config
     resolve_runtime_environment = runtime_env.resolve_runtime_environment
 
 
@@ -184,9 +185,15 @@ def build_storage_paths():
 
 
 ENV, SILVER_PATH, STORAGE_FORMAT = build_storage_paths()
+SILVER_NAMESPACE = build_namespace_config(cfg, "silver")
 NON_NULL_MIN_PCT = float(cfg["quality"]["non_null_min_pct"])
 VALID_CONFORMITE_VALUES = list(cfg["quality"]["valeurs_conformite"])
 PARAM_RANGES = dict(cfg["quality"]["parametres_plages"])
+SILVER_SUFFIX_TO_TABLE_KEY = {
+    "stations": "silver_stations",
+    "mesures": "silver_mesures",
+    "conformite": "silver_conformite",
+}
 
 if ENV == "azure":
     QUALITY_DIR = Path("/dbfs/FileStore/water_quality/quality")
@@ -219,6 +226,8 @@ except NameError:
 
 
 def read_dataset(suffix: str):
+    if ENV == "azure":
+        return spark.table(SILVER_NAMESPACE.fq_table(cfg["database"][SILVER_SUFFIX_TO_TABLE_KEY[suffix]]))
     return spark.read.format(STORAGE_FORMAT).load(f"{SILVER_PATH}{suffix}/")
 
 
