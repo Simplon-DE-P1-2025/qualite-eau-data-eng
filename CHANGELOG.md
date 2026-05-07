@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/Simplon-DE-P1-2025/qualite-eau-data-eng/compare/v1.1.0...v1.2.0) (2026-05-07)
+
+
+### Features
+
+* **databricks:** configure bundle jobs and azure runtime integration ([adfe04f](https://github.com/Simplon-DE-P1-2025/qualite-eau-data-eng/commit/adfe04f43df3d0b878f4ccc32ea4cc5664d3c0f6))
+
 # [1.1.0](https://github.com/Simplon-DE-P1-2025/qualite-eau-data-eng/compare/v1.0.0...v1.1.0) (2026-05-07)
 
 
