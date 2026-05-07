@@ -42,6 +42,15 @@ try:
 except AttributeError:
     pass
 
+try:
+    project_root = Path(__file__).resolve().parents[2]
+    if str(project_root) not in sys.path:
+        sys.path.insert(0, str(project_root))
+except NameError:
+    pass
+
+from src.runtime_env import resolve_runtime_environment
+
 
 def resolve_project_root() -> Path:
     candidates = []
@@ -96,7 +105,7 @@ with open(CONFIG_PATH, "r", encoding="utf-8") as f:
 
 
 def build_storage_paths():
-    env = cfg["environment"]
+    env = resolve_runtime_environment(cfg)
 
     if env == "community":
         p = cfg["storage"]["community"]

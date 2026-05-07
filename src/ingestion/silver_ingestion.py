@@ -39,6 +39,11 @@ except NameError:
     PROJECT_ROOT = Path.cwd().resolve()
 
 from src.transformations import silver as silver_tf
+from src.runtime_env import (
+    build_namespace_config,
+    initialize_namespace,
+    resolve_runtime_environment,
+)
 
 try:
     sys.stdout.reconfigure(encoding="utf-8")
@@ -114,7 +119,7 @@ PROJECT_ROOT = (
 with open(CONFIG_PATH, "r", encoding="utf-8") as f:
     cfg = yaml.safe_load(f)
 
-env = cfg["environment"]
+env = resolve_runtime_environment(cfg)
 
 if env == "community":
     p           = cfg["storage"]["community"]
@@ -143,7 +148,7 @@ elif env == "azure":
 else:
     raise ValueError(f"Environnement inconnu dans config.yml : {env}")
 
-DB  = cfg["database"]["name"]
+NAMESPACE = build_namespace_config(cfg, "silver")
 TBL = cfg["database"]
 LOCAL_RUN_ID = datetime.datetime.utcnow().strftime("%Y%m%d_%H%M%S")
 LOCAL_OUTPUT_PATHS: dict[str, str] = {}
@@ -323,13 +328,14 @@ def write_dataset(df, suffix: str, partition_cols=None):
 
 
 if env != "local":
-    spark.sql(f"CREATE DATABASE IF NOT EXISTS {DB}")
-    spark.sql(f"USE {DB}")
+    initialize_namespace(spark, NAMESPACE)
 
 print(f"âœ… Config chargÃ©e | env={env}")
 print(f"   BRONZE : {BRONZE_PATH}")
 print(f"   SILVER : {SILVER_PATH}")
-print(f"   DB     : {DB}")
+print(f"   Namespace : {NAMESPACE.namespace_display}")
+if NAMESPACE.external_location:
+    print(f"   External location : {NAMESPACE.external_location}")
 print(f"   FORMAT : {STORAGE_FORMAT}")
 
 if env == "local":
@@ -658,7 +664,10 @@ df_stations = silver_tf.build_stations(df_bronze_communes, df_geo_clean)
 
 dest_stations = write_dataset(df_stations, "stations")
 if env != "local":
-    spark.sql(f"CREATE TABLE IF NOT EXISTS {DB}.{TBL['silver_stations']} USING DELTA LOCATION '{dest_stations}'")
+    spark.sql(
+        f"CREATE TABLE IF NOT EXISTS {NAMESPACE.fq_table(TBL['silver_stations'])} "
+        f"USING DELTA LOCATION '{dest_stations}'"
+    )
 n_stations = df_stations.count()
 print(f"âœ… silver.stations         : {n_stations:,} lignes â†’ {dest_stations}")
 
@@ -674,7 +683,10 @@ df_mesures = silver_tf.build_mesures(df_cat)
 
 dest_mesures = write_dataset(df_mesures, "mesures", ["annee_prelevement", "code_departement"])
 if env != "local":
-    spark.sql(f"CREATE TABLE IF NOT EXISTS {DB}.{TBL['silver_mesures']} USING DELTA LOCATION '{dest_mesures}'")
+    spark.sql(
+        f"CREATE TABLE IF NOT EXISTS {NAMESPACE.fq_table(TBL['silver_mesures'])} "
+        f"USING DELTA LOCATION '{dest_mesures}'"
+    )
 n_mesures = df_mesures.count()
 print(f"âœ… silver.mesures          : {n_mesures:,} lignes â†’ {dest_mesures}")
 
@@ -689,7 +701,10 @@ df_conformite = silver_tf.build_conformite(df_cat)
 
 dest_conformite = write_dataset(df_conformite, "conformite", ["annee_prelevement", "code_departement"])
 if env != "local":
-    spark.sql(f"CREATE TABLE IF NOT EXISTS {DB}.{TBL['silver_conformite']} USING DELTA LOCATION '{dest_conformite}'")
+    spark.sql(
+        f"CREATE TABLE IF NOT EXISTS {NAMESPACE.fq_table(TBL['silver_conformite'])} "
+        f"USING DELTA LOCATION '{dest_conformite}'"
+    )
 n_conformite = df_conformite.count()
 print(f"silver.conformite : {n_conformite:,} lignes -> {dest_conformite}")
 

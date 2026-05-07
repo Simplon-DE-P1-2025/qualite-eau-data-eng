@@ -46,6 +46,11 @@ except NameError:
     PROJECT_ROOT = Path.cwd().resolve()
 
 from src.transformations import bronze_geo as bronze_geo_tf
+from src.runtime_env import (
+    build_namespace_config,
+    initialize_namespace,
+    resolve_runtime_environment,
+)
 
 try:
     sys.stdout.reconfigure(encoding="utf-8")
@@ -140,7 +145,7 @@ PROJECT_ROOT = (
 with open(CONFIG_PATH, "r", encoding="utf-8") as f:
     cfg = yaml.safe_load(f)
 # --- RÃ©solution des chemins selon l'environnement ---
-env = cfg["environment"]
+env = resolve_runtime_environment(cfg)
 
 if env == "community":
     p           = cfg["storage"]["community"]
@@ -169,12 +174,14 @@ elif env == "azure":
 else:
     raise ValueError(f"Environnement inconnu dans config.yml : {env}")
 
-DB  = cfg["database"]["name"]
+NAMESPACE = build_namespace_config(cfg, "bronze")
 TBL = cfg["database"]   # raccourci pour accÃ©der aux noms de tables
 
 print(f"âœ… Config chargÃ©e | env={env}")
 print(f"   BRONZE : {BRONZE_PATH}")
-print(f"   DB     : {DB}")
+print(f"   Namespace : {NAMESPACE.namespace_display}")
+if NAMESPACE.external_location:
+    print(f"   External location : {NAMESPACE.external_location}")
 print(f"   FORMAT : {STORAGE_FORMAT}")
 
 # ------------------------------------------------------------------
@@ -569,12 +576,12 @@ def write_bronze(records: list, table_key: str, delta_suffix: str,
 
     if env != "local":
         spark.sql(f"""
-            CREATE TABLE IF NOT EXISTS {DB}.{table_name}
+            CREATE TABLE IF NOT EXISTS {NAMESPACE.fq_table(table_name)}
             USING DELTA LOCATION '{dest}'
         """)
 
     n = spark.read.format(STORAGE_FORMAT).load(dest).count()
-    target_name = f"{DB}.{table_name}" if env != "local" else table_name
+    target_name = NAMESPACE.fq_table(table_name) if env != "local" else table_name
     print(f"âœ… {target_name} â†’ {n:,} lignes  [{dest}]")
     return n
 
@@ -587,9 +594,8 @@ print("âœ… Helper write_bronze prÃªt")
 # COMMAND ----------
 
 if env != "local":
-    spark.sql(f"CREATE DATABASE IF NOT EXISTS {DB}")
-    spark.sql(f"USE {DB}")
-    print(f"âœ… Base '{DB}' prÃªte")
+    initialize_namespace(spark, NAMESPACE)
+    print(f"âœ… Namespace '{NAMESPACE.namespace_display}' prêt")
 else:
     print("âœ… Mode local Spark : lecture/Ã©criture parquet par Spark, sans metastore")
 
@@ -704,12 +710,16 @@ if should_run_api("hubeau_resultats"):
 
         if env != "local":
             spark.sql(f"""
-                CREATE TABLE IF NOT EXISTS {DB}.{TBL['bronze_resultats']}
+                CREATE TABLE IF NOT EXISTS {NAMESPACE.fq_table(TBL['bronze_resultats'])}
                 USING DELTA LOCATION '{dest}'
             """)
 
         n = spark.read.format(STORAGE_FORMAT).load(dest).count()
-        target_name = f"{DB}.{TBL['bronze_resultats']}" if env != "local" else TBL["bronze_resultats"]
+        target_name = (
+            NAMESPACE.fq_table(TBL["bronze_resultats"])
+            if env != "local"
+            else TBL["bronze_resultats"]
+        )
         print(f"✅ {target_name} → {n:,} lignes (partitionné par année)")
     else:
         print("⚠️  Aucune donnée retournée par hubeau_resultats")

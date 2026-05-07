@@ -200,6 +200,82 @@ Exemple d'installation minimale:
 py -3.11 -m pip install pyspark pyyaml requests duckdb fastapi uvicorn flask plotly pyarrow pytest
 ```
 
+## Execution Azure Databricks
+
+Le repo peut maintenant etre execute via [databricks.yml](./databricks.yml).
+
+### Ce qui est deja branche
+
+- le `Bundle` cree les jobs Databricks Bronze, Silver, Quality et Gold
+- chaque job injecte `WATER_QUALITY_ENV=azure`
+- le code bascule alors automatiquement sur:
+  - les chemins `abfss://...`
+  - le catalog Unity Catalog `qualite-eau`
+  - les schemas `bronze`, `silver` et `gold`
+
+En local, `config.yml` peut rester sur `environment: local`.
+Le mode Azure est force par le Bundle au runtime, sans casser l'execution locale.
+
+### Prerequis Azure
+
+Avant le premier deploiement, verifie:
+
+- le workspace Databricks cible
+- le compte de stockage `stqualiteau`
+- les containers ADLS:
+  - `source`
+  - `bronze`
+  - `silver`
+  - `gold`
+  - `logs`
+- le catalog Unity Catalog `qualite-eau`
+- les schemas `bronze`, `silver`, `gold`
+- les external locations:
+  - `ext_loc_bronze`
+  - `ext_loc_silver`
+  - `ext_loc_gold`
+
+### Deployer manuellement le Bundle
+
+Depuis la racine du repo:
+
+```bash
+databricks bundle validate -t dev
+databricks bundle deploy -t dev
+```
+
+Pour lancer le pipeline complet:
+
+```bash
+databricks bundle run -t dev water_quality_full_pipeline
+```
+
+Pour lancer seulement une source Bronze:
+
+```bash
+databricks bundle run -t dev water_quality_bronze_geo
+databricks bundle run -t dev water_quality_bronze_communes
+databricks bundle run -t dev water_quality_bronze_resultats
+```
+
+### Deploiement GitHub Actions
+
+Le repo contient aussi une workflow Databricks:
+
+- [databricks-bundle.yml](./.github/workflows/databricks-bundle.yml)
+
+Cette workflow:
+
+- valide le Bundle
+- le deploie sur `push` vers `main`
+- utilise la target `dev`
+
+Secret GitHub requis:
+
+- `DATABRICKS_TOKEN`
+
+Le host Databricks est lu dans [databricks.yml](./databricks.yml).
+
 ## Commandes utiles
 
 ### Lancer le pipeline complet

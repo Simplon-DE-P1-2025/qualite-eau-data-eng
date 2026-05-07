@@ -30,12 +30,26 @@ storage:
     config:  "/dbfs/FileStore/water_quality/config/config.yml"
 
   azure:
-    storage_account:  "<your_storage_account>"
+    storage_account:  "stqualiteau"
     container_source: "source"
     container_bronze: "bronze"
     container_silver: "silver"
     container_gold:   "gold"
     container_logs:   "logs"
+
+# -----------------------------------------------------------------------------
+# UNITY CATALOG / STOCKAGE EXTERNE AZURE DATABRICKS
+# -----------------------------------------------------------------------------
+unity_catalog:
+  catalog: "qualite-eau"
+  schemas:
+    bronze: "bronze"
+    silver: "silver"
+    gold:   "gold"
+  external_locations:
+    bronze: "ext_loc_bronze"
+    silver: "ext_loc_silver"
+    gold:   "ext_loc_gold"
 
 # -----------------------------------------------------------------------------
 # BASE DE DONNÉES / METASTORE
@@ -81,7 +95,7 @@ apis:
       - annee           # Ex: "2026"
     params:
       annee:        null      # Ex: 2023
-      code_commune: "64445"      # Ex: "64445"
+      code_commune: null      # Ex: "64445"
       code_reseau:  null      # Ex: "064000432"
       nom_commune:  null     # Filtre par défaut — modifier pour élargir
       nom_reseau:   null
@@ -149,7 +163,7 @@ apis:
     params:
       # Filtres géographiques
       code_commune:       null
-      code_departement:   "64"   # Version plus stable en local : commencer par un seul departement
+      code_departement:   "64,69,33,31"   # Version plus stable en local : commencer par un seul departement
       nom_commune:        null
       nom_distributeur:   null
       nom_moa:            null

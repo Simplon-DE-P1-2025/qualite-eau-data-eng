@@ -1,0 +1,162 @@
+bundle:
+  name: qualite-eau-data-eng
+
+variables:
+  cluster_spark_version:
+    description: Databricks Runtime version for job clusters.
+    default: "17.3.x-scala2.13"
+  cluster_node_type_id:
+    description: Azure VM type used by job clusters.
+    default: "Standard_D2ads_v6"
+  cluster_min_workers:
+    description: Minimum number of workers for job clusters.
+    default: "2"
+  cluster_max_workers:
+    description: Maximum number of workers for job clusters.
+    default: "8"
+
+targets:
+  dev:
+    default: true
+    workspace:
+      host: https://adb-7405617780839522.2.azuredatabricks.net
+      root_path: /Workspace/Users/${workspace.current_user.userName}/.bundle/${bundle.name}/${bundle.target}
+
+resources:
+  jobs:
+    water_quality_full_pipeline:
+      name: water-quality-full-pipeline-${bundle.target}
+      max_concurrent_runs: 1
+      job_clusters:
+        - job_cluster_key: pipeline_cluster
+          new_cluster:
+            spark_version: ${var.cluster_spark_version}
+            node_type_id: ${var.cluster_node_type_id}
+            autoscale:
+              min_workers: ${var.cluster_min_workers}
+              max_workers: ${var.cluster_max_workers}
+            spark_env_vars:
+              WATER_QUALITY_ENV: azure
+      tasks:
+        - task_key: bronze
+          job_cluster_key: pipeline_cluster
+          spark_python_task:
+            python_file: src/ingestion/bronze_ingestion.py
+          libraries:
+            - pypi:
+                package: pyyaml
+            - pypi:
+                package: requests
+
+        - task_key: silver
+          depends_on:
+            - task_key: bronze
+          job_cluster_key: pipeline_cluster
+          spark_python_task:
+            python_file: src/ingestion/silver_ingestion.py
+          libraries:
+            - pypi:
+                package: pyyaml
+
+        - task_key: quality
+          depends_on:
+            - task_key: silver
+          job_cluster_key: pipeline_cluster
+          spark_python_task:
+            python_file: notebooks/quality/great_expectations_validation.py
+          libraries:
+            - pypi:
+                package: pyyaml
+            - pypi:
+                package: great-expectations==0.18.21
+
+        - task_key: gold
+          depends_on:
+            - task_key: quality
+          job_cluster_key: pipeline_cluster
+          spark_python_task:
+            python_file: src/ingestion/gold_ingestion.py
+          libraries:
+            - pypi:
+                package: pyyaml
+
+    water_quality_bronze_geo:
+      name: water-quality-bronze-geo-${bundle.target}
+      max_concurrent_runs: 1
+      job_clusters:
+        - job_cluster_key: bronze_cluster
+          new_cluster:
+            spark_version: ${var.cluster_spark_version}
+            node_type_id: ${var.cluster_node_type_id}
+            autoscale:
+              min_workers: ${var.cluster_min_workers}
+              max_workers: ${var.cluster_max_workers}
+            spark_env_vars:
+              WATER_QUALITY_ENV: azure
+      tasks:
+        - task_key: bronze_geo
+          job_cluster_key: bronze_cluster
+          spark_python_task:
+            python_file: src/ingestion/bronze_ingestion.py
+            parameters:
+              - --api
+              - geo_communes
+          libraries:
+            - pypi:
+                package: pyyaml
+            - pypi:
+                package: requests
+
+    water_quality_bronze_communes:
+      name: water-quality-bronze-communes-${bundle.target}
+      max_concurrent_runs: 1
+      job_clusters:
+        - job_cluster_key: bronze_cluster
+          new_cluster:
+            spark_version: ${var.cluster_spark_version}
+            node_type_id: ${var.cluster_node_type_id}
+            autoscale:
+              min_workers: ${var.cluster_min_workers}
+              max_workers: ${var.cluster_max_workers}
+            spark_env_vars:
+              WATER_QUALITY_ENV: azure
+      tasks:
+        - task_key: bronze_communes
+          job_cluster_key: bronze_cluster
+          spark_python_task:
+            python_file: src/ingestion/bronze_ingestion.py
+            parameters:
+              - --api
+              - hubeau_communes
+          libraries:
+            - pypi:
+                package: pyyaml
+            - pypi:
+                package: requests
+
+    water_quality_bronze_resultats:
+      name: water-quality-bronze-resultats-${bundle.target}
+      max_concurrent_runs: 1
+      job_clusters:
+        - job_cluster_key: bronze_cluster
+          new_cluster:
+            spark_version: ${var.cluster_spark_version}
+            node_type_id: ${var.cluster_node_type_id}
+            autoscale:
+              min_workers: ${var.cluster_min_workers}
+              max_workers: ${var.cluster_max_workers}
+            spark_env_vars:
+              WATER_QUALITY_ENV: azure
+      tasks:
+        - task_key: bronze_resultats
+          job_cluster_key: bronze_cluster
+          spark_python_task:
+            python_file: src/ingestion/bronze_ingestion.py
+            parameters:
+              - --api
+              - hubeau_resultats
+          libraries:
+            - pypi:
+                package: pyyaml
+            - pypi:
+                package: requests

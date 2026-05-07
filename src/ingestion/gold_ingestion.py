@@ -17,6 +17,11 @@ except NameError:
     PROJECT_ROOT = Path.cwd().resolve()
 
 from src.transformations import gold as gold_tf
+from src.runtime_env import (
+    build_namespace_config,
+    initialize_namespace,
+    resolve_runtime_environment,
+)
 
 try:
     sys.stdout.reconfigure(encoding="utf-8")
@@ -89,7 +94,7 @@ PROJECT_ROOT = (
 with open(CONFIG_PATH, "r", encoding="utf-8") as f:
     cfg = yaml.safe_load(f)
 
-env = cfg["environment"]
+env = resolve_runtime_environment(cfg)
 
 if env == "community":
     p = cfg["storage"]["community"]
@@ -118,7 +123,7 @@ elif env == "azure":
 else:
     raise ValueError(f"Environnement inconnu dans config.yml : {env}")
 
-DB = cfg["database"]["name"]
+NAMESPACE = build_namespace_config(cfg, "gold")
 TBL = cfg["database"]
 LOCAL_SILVER_MANIFEST_PATH = (
     (PROJECT_ROOT / "logs" / "silver_local_latest.json")
@@ -200,14 +205,13 @@ def write_dataset(df, suffix: str, partition_cols=None):
 def create_table_if_needed(table_key: str, dest: str) -> None:
     if env != "local":
         spark.sql(
-            f"CREATE TABLE IF NOT EXISTS {DB}.{TBL[table_key]} "
+            f"CREATE TABLE IF NOT EXISTS {NAMESPACE.fq_table(TBL[table_key])} "
             f"USING DELTA LOCATION '{dest}'"
         )
 
 
 if env != "local":
-    spark.sql(f"CREATE DATABASE IF NOT EXISTS {DB}")
-    spark.sql(f"USE {DB}")
+    initialize_namespace(spark, NAMESPACE)
 
 if env == "local":
     GOLD_PATH = ensure_local_output_base(GOLD_PATH, "gold")
@@ -222,7 +226,9 @@ if env == "local":
 print(f"✅ Config chargée | env={env}")
 print(f"   SILVER : {SILVER_PATH}")
 print(f"   GOLD   : {GOLD_PATH}")
-print(f"   DB     : {DB}")
+print(f"   Namespace : {NAMESPACE.namespace_display}")
+if NAMESPACE.external_location:
+    print(f"   External location : {NAMESPACE.external_location}")
 print(f"   FORMAT : {STORAGE_FORMAT}")
 if env == "local" and LOCAL_SILVER_OUTPUTS:
     print(f"   SILVER manifest local : {LOCAL_SILVER_MANIFEST_PATH}")
