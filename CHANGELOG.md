@@ -1,3 +1,10 @@
+## [1.2.2](https://github.com/Simplon-DE-P1-2025/qualite-eau-data-eng/compare/v1.2.1...v1.2.2) (2026-05-07)
+
+
+### Bug Fixes
+
+* **databricks:** resolve repo root for bundle-based script imports ([8e8ca9c](https://github.com/Simplon-DE-P1-2025/qualite-eau-data-eng/commit/8e8ca9cc99cfca43b9d9300923d42c14fb9160fe))
+
 ## [1.2.1](https://github.com/Simplon-DE-P1-2025/qualite-eau-data-eng/compare/v1.2.0...v1.2.1) (2026-05-07)
 
 
