@@ -55,8 +55,14 @@ def resolve_project_root_for_imports() -> Path | None:
     for candidate in candidates:
         search_roots = [candidate] + list(candidate.parents)
         for root in search_roots:
-            if (root / "src").is_dir() and (
-                (root / "config" / "config.yml").exists() or (root / "config.yml").exists()
+            if root.is_dir() and root.name == "src":
+                return root.parent
+            if (root / "src").is_dir():
+                return root
+            if (
+                root.is_dir()
+                and root.name == "files"
+                and (root / "src").is_dir()
             ):
                 return root
 
