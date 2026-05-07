@@ -1,3 +1,10 @@
+## [1.2.1](https://github.com/Simplon-DE-P1-2025/qualite-eau-data-eng/compare/v1.2.0...v1.2.1) (2026-05-07)
+
+
+### Bug Fixes
+
+* **bundle:** configure great expectations step as notebook task ([22d9605](https://github.com/Simplon-DE-P1-2025/qualite-eau-data-eng/commit/22d9605f4467ac9671d336f12ed363f4a785e096))
+
 # [1.2.0](https://github.com/Simplon-DE-P1-2025/qualite-eau-data-eng/compare/v1.1.0...v1.2.0) (2026-05-07)
 
 
