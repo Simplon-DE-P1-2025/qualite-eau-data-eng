@@ -1,3 +1,10 @@
+## [1.2.6](https://github.com/Simplon-DE-P1-2025/qualite-eau-data-eng/compare/v1.2.5...v1.2.6) (2026-05-07)
+
+
+### Bug Fixes
+
+* **databricks:** improve bundle config path resolution ([0868bfc](https://github.com/Simplon-DE-P1-2025/qualite-eau-data-eng/commit/0868bfc40b1223579b282e66454dc6eee895310e))
+
 ## [1.2.5](https://github.com/Simplon-DE-P1-2025/qualite-eau-data-eng/compare/v1.2.4...v1.2.5) (2026-05-07)
 
 
