@@ -39,13 +39,26 @@ def resolve_project_root_for_imports() -> Path:
 PROJECT_ROOT = resolve_project_root_for_imports()
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
+SRC_DIR = PROJECT_ROOT / "src"
+TRANSFORMATIONS_DIR = SRC_DIR / "transformations"
+for import_path in (SRC_DIR, TRANSFORMATIONS_DIR):
+    if str(import_path) not in sys.path:
+        sys.path.insert(0, str(import_path))
 
-from src.transformations import gold as gold_tf
-from src.runtime_env import (
-    build_namespace_config,
-    initialize_namespace,
-    resolve_runtime_environment,
-)
+try:
+    from src.transformations import gold as gold_tf
+    from src.runtime_env import (
+        build_namespace_config,
+        initialize_namespace,
+        resolve_runtime_environment,
+    )
+except ModuleNotFoundError:
+    import gold as gold_tf
+    from runtime_env import (
+        build_namespace_config,
+        initialize_namespace,
+        resolve_runtime_environment,
+    )
 
 try:
     sys.stdout.reconfigure(encoding="utf-8")

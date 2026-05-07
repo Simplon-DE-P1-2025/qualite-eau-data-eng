@@ -72,8 +72,15 @@ def resolve_project_root_for_imports() -> Path | None:
 project_root_for_imports = resolve_project_root_for_imports()
 if project_root_for_imports and str(project_root_for_imports) not in sys.path:
     sys.path.insert(0, str(project_root_for_imports))
+if project_root_for_imports:
+    src_dir_for_imports = project_root_for_imports / "src"
+    if str(src_dir_for_imports) not in sys.path:
+        sys.path.insert(0, str(src_dir_for_imports))
 
-from src.runtime_env import resolve_runtime_environment
+try:
+    from src.runtime_env import resolve_runtime_environment
+except ModuleNotFoundError:
+    from runtime_env import resolve_runtime_environment
 
 
 def resolve_project_root() -> Path:
