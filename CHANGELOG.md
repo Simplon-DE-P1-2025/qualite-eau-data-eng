@@ -1,3 +1,10 @@
+## [1.2.4](https://github.com/Simplon-DE-P1-2025/qualite-eau-data-eng/compare/v1.2.3...v1.2.4) (2026-05-07)
+
+
+### Bug Fixes
+
+* **databricks:** add fallback imports for bundle workspace execution ([5e44d97](https://github.com/Simplon-DE-P1-2025/qualite-eau-data-eng/commit/5e44d974eacbc86a3b40a881f4706fa15227bffd))
+
 ## [1.2.3](https://github.com/Simplon-DE-P1-2025/qualite-eau-data-eng/compare/v1.2.2...v1.2.3) (2026-05-07)
 
 
