@@ -1,3 +1,10 @@
+## [1.2.9](https://github.com/Simplon-DE-P1-2025/qualite-eau-data-eng/compare/v1.2.8...v1.2.9) (2026-05-08)
+
+
+### Bug Fixes
+
+* **local:** restore bronze local parquet write and document missing deps ([0d751dd](https://github.com/Simplon-DE-P1-2025/qualite-eau-data-eng/commit/0d751dda78dcbc8ccf15242e9ca14201b66e2bee))
+
 ## [1.2.8](https://github.com/Simplon-DE-P1-2025/qualite-eau-data-eng/compare/v1.2.7...v1.2.8) (2026-05-07)
 
 
