@@ -32,6 +32,7 @@ import shutil
 import sys
 import tempfile
 import time
+import pandas as pd
 import yaml
 from pathlib import Path
 import requests

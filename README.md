@@ -183,6 +183,7 @@ Le projet a ete travaille avec:
 
 Bibliotheques Python utilisees dans le projet:
 
+- `pandas`
 - `pyspark`
 - `pyyaml`
 - `requests`
@@ -192,12 +193,13 @@ Bibliotheques Python utilisees dans le projet:
 - `flask`
 - `plotly`
 - `pyarrow`
+- `great-expectations`
 - `pytest`
 
 Exemple d'installation minimale:
 
 ```powershell
-py -3.11 -m pip install pyspark pyyaml requests duckdb fastapi uvicorn flask plotly pyarrow pytest
+py -3.11 -m pip install pandas pyspark pyyaml requests duckdb fastapi uvicorn flask plotly pyarrow great-expectations pytest
 ```
 
 ## Execution Azure Databricks
